@@ -9,4 +9,5 @@
 
     <string name="dashboard_start_route">Start Route</string>
     <string name="dashboard_load_route">Load Route</string>
+    <string name="ranking">Ranking</string>
 </resources>
