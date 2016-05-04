@@ -14,39 +14,43 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:background="#00ffffff">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="0.25">
+            android:layout_weight="0.25"
+            android:background="#00ffffff">
 
             <FrameLayout
-                android:layout_width="182dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="left"
-                android:background="#ffffff">
+                android:background="#00ffffff"
+                android:layout_weight="1">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView4"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/sign" />
+                    android:src="@drawable/sign"
+                    style="@android:style/Widget.Material.Light.Button" />
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:background="#ffffff">
+                android:background="#00ffffff"
+                android:layout_weight="1">
 
                 <ImageView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/imageView5"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/silhouette" />
+                    android:src="@drawable/silhouette"
+                    style="@android:style/Widget.Material.Light.Button" />
             </FrameLayout>
         </LinearLayout>
 
@@ -56,16 +60,18 @@
             android:layout_weight="0.25">
 
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:background="#ffffff">
+                android:background="#00ffffff"
+                android:layout_gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imageView6"
+                    android:src="@drawable/arrow"
                     android:layout_gravity="center"
-                    android:src="@drawable/arrow" />
+                    style="@android:style/Widget.Material.Light.Button" />
             </FrameLayout>
         </FrameLayout>
 
@@ -78,26 +84,33 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="#ffffff">
+                android:background="#00ffffff"
+                android:layout_gravity="center"
+                android:layout_weight="1">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:id="@+id/imageView2"
-                    android:src="@drawable/map" />
+                    android:src="@drawable/map"
+                    android:layout_gravity="center"
+                    style="@android:style/Widget.Material.Light.Button" />
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="#ffffff">
+                android:background="#00ffffff"
+                android:layout_gravity="center"
+                android:layout_weight="1">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:id="@+id/imageView3"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/people" />
+                    android:src="@drawable/people"
+                    android:layout_gravity="center"
+                    style="@android:style/Widget.Material.Light.Button" />
             </FrameLayout>
         </LinearLayout>
 
