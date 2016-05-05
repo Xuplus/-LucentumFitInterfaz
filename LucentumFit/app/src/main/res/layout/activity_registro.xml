@@ -43,7 +43,7 @@
             android:inputType="textPersonName"
             android:hint="Usuario"
             android:ems="10"
-            android:id="@+id/editText3"
+            android:id="@+id/et_reg_usuario"
             android:fontFamily="sans-serif-light"
             android:background="@drawable/myedittext"/>
 
@@ -54,7 +54,7 @@
             android:inputType="textEmailAddress"
             android:hint="Email"
             android:ems="10"
-            android:id="@+id/editText4"
+            android:id="@+id/et_reg_email"
             android:fontFamily="sans-serif-light"
             android:background="@drawable/myedittext"/>
 
@@ -65,7 +65,7 @@
             android:inputType="textPassword"
             android:hint="Password"
             android:ems="10"
-            android:id="@+id/editText5"
+            android:id="@+id/et_reg_pass"
             android:fontFamily="sans-serif-light"
             android:background="@drawable/myedittext"/>
 
@@ -75,7 +75,7 @@
             android:inputType="textPassword"
             android:hint="Confirmar Password"
             android:ems="10"
-            android:id="@+id/editText6"
+            android:id="@+id/et_reg_pass2"
             android:fontFamily="sans-serif-light"
             android:background="@drawable/myedittext"
             android:layout_marginBottom="30dp"/>
@@ -89,6 +89,7 @@
             android:textColor="@android:color/white"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:background="@drawable/mybutton"/>
+            android:background="@drawable/mybutton"
+            android:onClick="Registrarse"/>
     </LinearLayout>
 </RelativeLayout>

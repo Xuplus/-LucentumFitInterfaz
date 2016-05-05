@@ -34,10 +34,10 @@ public class Usuario {
 
     //Constructor Nombre, usuario y pass
 
-    public Usuario(String nom, String usu, String pas)
+    public Usuario(String usu, String corr, String pas)
     {
-        Nombre=nom;
         Usuario=usu;
+        Correo=corr;
         Pass=pas;
     }
 
@@ -50,6 +50,8 @@ public class Usuario {
     {
         return Usuario;
     }
+
+    public String getCorreo() {return Correo; }
 
     public String getPass()
     {
