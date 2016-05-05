@@ -4,6 +4,80 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context="lucentum.com.Contactos">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context="lucentum.com.Contactos"
+    android:background="#64B5F6">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_txt_Contactos"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ll_NuevoContacto"
+        android:layout_above="@+id/ll_NuevoContacto">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Contactos"
+            android:id="@+id/txt_Contactos"
+            android:layout_gravity="center"
+            android:textColor="#ffffffff"
+            android:textSize="40dp"
+            android:layout_marginTop="30dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
+        android:id="@+id/ll_Contactos">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="376dp"
+            android:id="@+id/lv_Contactos"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_NuevoContacto"
+        android:layout_above="@+id/ll_Contactos"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp">
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:id="@+id/et_NuevoContacto"
+            android:background="@drawable/myedittext"
+            android:editable="false"
+            android:focusableInTouchMode="false"
+            android:fontFamily="sans-serif-light"
+            android:hint="Nuevo Contacto..."
+            android:inputType="textPersonName"
+            android:layout_gravity="center_vertical" />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ib_anadir"
+            android:background="@drawable/anadir"
+            android:clickable="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp" />
+
+    </LinearLayout>
 
 </RelativeLayout>
