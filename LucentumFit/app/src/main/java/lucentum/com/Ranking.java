@@ -13,6 +13,15 @@ public class Ranking extends AppCompatActivity {
     private String[] amigos = {"juan", "carla", "pedro", "paco", "ana", "carlos", "esteban", "jose", "sara", "chema", "sandra", "carol", "cesar", "fernando"};
     private String[] global = {"bolt", "jornet", "stevenson", "sergio", "smith", "charlie", "martinez", "jose luis", "amaya", "petrov", "champion", "april", "leslie", "ron"};
 
+
+    //TODO:
+        //  MÉTODO PARA LEER DE JSON O LO QUE SEA Y GENERAR EL STRING
+
+    //TODO:
+        //  MÉTODO PARA AÑADIR LA NUMERACIÓN
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
