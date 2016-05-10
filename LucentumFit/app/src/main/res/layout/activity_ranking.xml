@@ -75,11 +75,12 @@
         android:id="@+id/ll_scrollview"
         android:layout_below="@+id/ll_buttons"
         android:gravity="center"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp">
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/user_list"
             android:background="#FFFFFF"
             android:smoothScrollbar="false" />
