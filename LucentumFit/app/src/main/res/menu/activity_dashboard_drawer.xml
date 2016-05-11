@@ -24,16 +24,12 @@
             android:title="Contactos" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@android:drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@android:drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_ajustes"
+                android:icon="@android:drawable/ic_menu_manage"
+                android:title="Ajustes" />
         </menu>
     </item>
 
