@@ -5,6 +5,225 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="lucentum.com.EditarPerfil">
+    tools:context="lucentum.com.EditarPerfil"
+    android:background="#64B5F6">
+
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:id="@+id/btn_FotoPerfil"
+        android:layout_below="@+id/lbl_EditarPerfil"
+        android:layout_centerHorizontal="true"
+
+        android:background="#64B5F6" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="@string/editar_perfil"
+        android:id="@+id/lbl_EditarPerfil"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/btn_FotoPerfil"
+        android:layout_alignStart="@+id/btn_FotoPerfil"
+        android:minLines="1"
+        android:textSize="30dp"
+        android:textStyle="normal"
+        android:textColor="#FFFFFF"
+        android:singleLine="false"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/editar_perfil_nombre_usuario"
+        android:id="@+id/lbl_NombreUsuario"
+        android:layout_below="@+id/btn_FotoPerfil"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/editar_perfil_nombre"
+        android:ems="10"
+        android:id="@+id/tbx_Nombre"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:typeface="normal"
+        android:layout_alignRight="@+id/btn_FotoPerfil"
+        android:fontFamily="sans-serif-light"
+        android:background="@drawable/myedittext"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/tbx_Edad"
+        android:layout_below="@+id/tbx_Nombre"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:textStyle="normal"
+        android:autoText="false"
+        android:layout_toLeftOf="@+id/lbl_NombreUsuario"
+        android:layout_toStartOf="@+id/lbl_NombreUsuario"
+        android:hint="@string/editar_perfil_edad"
+        android:fontFamily="sans-serif-light"
+        android:background="@drawable/myedittext"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/editar_perfil_sexo"
+        android:id="@+id/lbl_sexo"
+        android:layout_below="@+id/tbx_Edad"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="20dp"
+        android:textColor="#000000" />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignBottom="@+id/lbl_sexo"
+        android:onClick="onRadioButtonClicked"
+        android:id="@+id/radioGroup"
+        android:weightSum="1"
+        android:layout_alignLeft="@+id/btn_FotoPerfil"
+        android:layout_alignStart="@+id/btn_FotoPerfil">
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/editar_perfil_mujer"
+        android:id="@+id/rbtn_hombre"
+        android:checked="false"
+        android:layout_alignTop="@+id/lbl_sexo"
+        android:layout_alignLeft="@+id/btn_FotoPerfil"
+        android:layout_alignStart="@+id/btn_FotoPerfil"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1.09" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/editar_perfil_hombre"
+        android:id="@+id/rbtn_mujer"
+        android:checked="false"
+        android:layout_alignTop="@+id/rbtn_hombre"
+        android:layout_toRightOf="@+id/rbtn_hombre"
+        android:layout_toEndOf="@+id/rbtn_hombre"
+        android:layout_marginLeft="20dp" />
+    </RadioGroup>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/tbx_altura"
+        android:hint="@string/editar_perfil_altura"
+        android:fontFamily="sans-serif-light"
+        android:background="@drawable/myedittext"
+        android:layout_below="@+id/lbl_sexo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/btn_FotoPerfil"
+        android:layout_toStartOf="@+id/btn_FotoPerfil" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/tbx_peso"
+        android:hint="@string/editar_perfil_peso"
+        android:layout_below="@+id/tbx_altura"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_alignRight="@+id/tbx_altura"
+        android:layout_alignEnd="@+id/tbx_altura"
+        android:fontFamily="sans-serif-light"
+        android:background="@drawable/myedittext"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tbx_cuidad"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="@string/editar_perfil_cuidad"
+        android:fontFamily="sans-serif-light"
+        android:background="@drawable/myedittext"
+        android:layout_below="@+id/tbx_peso"
+        android:layout_marginTop="10dp"
+        android:layout_alignRight="@+id/tbx_Edad"
+        android:layout_alignEnd="@+id/tbx_Edad" />
+
+    <EditText
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tbx_pais"
+        android:hint="@string/editar_perfil_Pais"
+        android:layout_below="@+id/tbx_cuidad"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
+        android:background="@drawable/myedittext"
+        android:layout_alignRight="@+id/tbx_cuidad"
+        android:layout_alignEnd="@+id/tbx_cuidad" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/tbx_correo"
+        android:layout_below="@+id/tbx_pais"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_alignRight="@+id/btn_FotoPerfil"
+        android:layout_alignEnd="@+id/btn_FotoPerfil"
+        android:hint="@string/editar_perfil_correo"
+        android:fontFamily="sans-serif-light"
+        android:background="@drawable/myedittext"/>
+
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/btn_save"
+        android:background="@drawable/save"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@+id/btn_FotoPerfil"
+        android:layout_marginLeft="200dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/img_foto"
+        android:layout_below="@+id/lbl_EditarPerfil"
+        android:layout_alignLeft="@+id/btn_FotoPerfil"
+        android:layout_alignStart="@+id/btn_FotoPerfil"
+        android:layout_above="@+id/lbl_NombreUsuario"
+        android:layout_alignRight="@+id/btn_FotoPerfil"
+        android:layout_alignEnd="@+id/btn_FotoPerfil"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:adjustViewBounds="false"
+        style="@style/Base.Widget.AppCompat.Toolbar" />
+
 
 </RelativeLayout>

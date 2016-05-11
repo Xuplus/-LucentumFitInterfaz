@@ -34,29 +34,34 @@
         android:id="@+id/ll_campos"
         android:layout_below="@id/ll_imagen"
         android:layout_weight="1"
-        android:gravity="center">
+        android:gravity="center"
+        >
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:inputType="textPersonName"
-            android:text="Usuario"
+            android:hint="Usuario"
             android:ems="10"
             android:id="@+id/et_usuario"
             android:layout_gravity="center"
-
+            android:background="@drawable/myedittext"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="sans-serif-light"
              />
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:inputType="textPassword"
-            android:text="Password"
+            android:hint="Password"
             android:ems="10"
             android:id="@+id/et_password"
             android:layout_below="@+id/et_usuario"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
+            android:background="@drawable/myedittext"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="sans-serif-light"
              />
     </LinearLayout>
 
@@ -72,10 +77,16 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Iniciar Sesion"
+            android:text="Iniciar Sesión"
             android:id="@+id/btn_iniciarSesion"
             android:layout_below="@+id/editText2"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/mybutton"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:fontFamily="sans-serif-light"/>
     </LinearLayout>
 
     <LinearLayout
@@ -98,7 +109,8 @@
                 android:text="¿No tienes cuenta?"
                 android:id="@+id/textView2"
                 android:layout_gravity="center"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-light"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -106,7 +118,15 @@
                 android:text="Regístrate"
                 android:id="@+id/btn_registrarse"
                 android:layout_gravity="center"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:background="@drawable/mybutton"
+                android:textColor="@android:color/white"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:fontFamily="sans-serif-light"
+                android:onClick="Registro"
+                />
         </LinearLayout>
 
         <ImageView
