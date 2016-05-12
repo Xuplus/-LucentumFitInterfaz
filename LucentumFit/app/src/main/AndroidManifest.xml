@@ -22,8 +22,6 @@
         </activity>
         <activity android:name=".Rutas" >
         </activity>
-        <activity android:name=".RutaDetallada" >
-        </activity>
         <activity android:name=".Contactos" >
         </activity>
         <activity android:name=".Perfil" >
