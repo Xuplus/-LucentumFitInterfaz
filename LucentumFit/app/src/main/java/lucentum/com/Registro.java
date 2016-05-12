@@ -1,5 +1,6 @@
 package lucentum.com;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -90,6 +91,8 @@ public class Registro extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
 
+                    MostrarToast("Registrado Correctamente");
+                    cambioActivity();
                 }
             }, new Response.ErrorListener(){
 
@@ -158,6 +161,13 @@ public class Registro extends AppCompatActivity {
     {
         Toast toast = Toast.makeText(this, mensaje, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    public void cambioActivity()
+    {
+        Intent intent = new Intent(this,InicioSesion.class);
+        startActivity(intent);
+        finish();
     }
 
 
