@@ -86,7 +86,8 @@
             android:layout_gravity="center"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:fontFamily="sans-serif-light"/>
+            android:fontFamily="sans-serif-light"
+            android:onClick="IniciarSesion"/>
     </LinearLayout>
 
     <LinearLayout
