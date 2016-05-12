@@ -101,7 +101,7 @@ public class InicioSesion extends AppCompatActivity {
 
     public void cambioActivity()
     {
-        Intent intent = new Intent(this,Perfil.class);
+        Intent intent = new Intent(this,Dashboard.class);
         startActivity(intent);
         finish();
     }
