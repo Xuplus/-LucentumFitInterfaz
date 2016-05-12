@@ -10,4 +10,24 @@
     <string name="dashboard_start_route">Start Route</string>
     <string name="dashboard_load_route">Load Route</string>
     <string name="ranking">Ranking</string>
+
+    <string name="editar_perfil">Editar Perfil</string>
+    <string name="editar_perfil_nombre_usuario">Obama69</string>
+    <string name="editar_perfil_nombre">Nombre</string>
+    <string name="editar_perfil_edad">Edad</string>
+    <string name="editar_perfil_sexo">Sexo</string>
+    <string name="editar_perfil_mujer">Mujer</string>
+    <string name="editar_perfil_hombre">Hombre</string>
+    <string name="editar_perfil_altura">Altura</string>
+    <string name="editar_perfil_peso">Peso</string>
+    <string name="editar_perfil_cuidad">Cuidad</string>
+    <string name="editar_perfil_Pais">Pais</string>
+    <string name="editar_perfil_correo">Correo</string>
+    <string name="configuracion">Configuración</string>
+    <string name="configuracion_privacidad">Privacidad</string>
+    <string name="configuracion_datos_publicos">" Datos públicos"</string>
+    <string name="configuracion_datos_privados">" Datos privados"</string>
+    <string name="configuracion_notificacion">Notificaciones</string>
+    <string name="configuracion_peticion_amistad">" Petición de amistad"</string>
+    <string name="configuracion_union_amigo">" Un amigo se ha unido"</string>
 </resources>

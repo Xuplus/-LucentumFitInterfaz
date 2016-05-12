@@ -4,7 +4,102 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="lucentum.com.Configuracion">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".InicioSesion"
+    android:background="#64B5F6">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/configuracion"
+        android:id="@+id/lbl_configuracion"
+        android:textColor="#ffffff"
+        android:textSize="40sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="150dp"
+        android:weightSum="1"
+        android:id="@+id/linearLayout">
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/configuracion_datos_publicos"
+            android:id="@+id/sw_datos_publicos"
+            android:background="#ffffff"
+            android:checked="true"
+            android:textSize="15sp" />
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/configuracion_datos_privados"
+            android:id="@+id/sw_datos_privados"
+            android:checked="false"
+            android:background="#ffffff"
+            android:layout_marginTop="2dp"
+            android:textSize="15sp"
+        />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/configuracion_privacidad"
+        android:id="@+id/textView3"
+        android:textSize="30sp"
+        android:layout_below="@+id/lbl_configuracion"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="50dp"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/configuracion_notificacion"
+        android:id="@+id/lbl_notificaciones"
+        android:textSize="30sp"
+        android:layout_marginTop="63dp"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/configuracion_peticion_amistad"
+        android:id="@+id/sw_peticion_amistad"
+        android:background="@drawable/myedittext"
+        android:checked="true"
+        android:textSize="15sp"
+        android:textStyle="normal"
+        android:layout_below="@+id/lbl_notificaciones"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/configuracion_union_amigo"
+        android:id="@+id/sw_unio_amigo"
+        android:checked="true"
+        android:background="@drawable/myedittext"
+        android:textSize="15sp"
+        android:layout_below="@+id/sw_peticion_amistad"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+
+        />
 
 </RelativeLayout>
