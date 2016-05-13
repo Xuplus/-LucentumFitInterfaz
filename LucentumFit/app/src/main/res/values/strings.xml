@@ -30,4 +30,6 @@
     <string name="configuracion_notificacion">Notificaciones</string>
     <string name="configuracion_peticion_amistad">" Petición de amistad"</string>
     <string name="configuracion_union_amigo">" Un amigo se ha unido"</string>
+    <string name="title_activity_rutadetallada">Map</string>
+    <string name="title_activity_crearruta">Map</string>
 </resources>
