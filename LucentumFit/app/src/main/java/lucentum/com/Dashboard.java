@@ -64,7 +64,7 @@ public class Dashboard extends AppCompatActivity
     };
 
     private void loadRuta() {
-        Intent in = new Intent(this,RutaDetallada.class);
+        Intent in = new Intent(this,rutadetallada.class);
     }
 
     private void startRuta() {
