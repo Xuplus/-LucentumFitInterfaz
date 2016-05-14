@@ -1,6 +1,8 @@
 package lucentum.com;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +25,7 @@ import java.util.Map;
 public class InicioSesion extends AppCompatActivity {
 
     RequestQueue requestQueue;
-    String loginURL = "http://alacantfit.herokuapp.com/login/";
+    String loginURL = "http://46.101.84.36:3000/login/";
     EditText usuario,pass;
 
     @Override
@@ -40,7 +42,13 @@ public class InicioSesion extends AppCompatActivity {
 
     }
 
-    public void IniciarSesion(View v) {
+   public void IniciarSesion(View v) {
+       SharedPreferences preferences=getSharedPreferences("usuario", Context.MODE_PRIVATE);
+       SharedPreferences.Editor editor= preferences.edit();
+       editor.putString("usu",usuario.getText().toString());
+       editor.commit();
+
+       MostrarToast("Bienvenido " + usuario.getText().toString());
         cambioActivity();
     }
    /* public void IniciarSesion(View v)
@@ -50,7 +58,13 @@ public class InicioSesion extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
 
-                    MostrarToast("Bienvenido "+usuario.getText().toString());
+                    SharedPreferences preferences=getSharedPreferences("usuario", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor= preferences.edit();
+                    editor.putString("usu",usuario.getText().toString());
+                    editor.commit();
+
+                    MostrarToast("Bienvenido " + usuario.getText().toString());
+
                     cambioActivity();
                 }
             }, new Response.ErrorListener(){
@@ -101,8 +115,9 @@ public class InicioSesion extends AppCompatActivity {
 
     public void cambioActivity()
     {
-        Intent intent = new Intent(this,Dashboard.class);
+        Intent intent = new Intent(this,Perfil.class);
         startActivity(intent);
-        finish();
+        System.out.println("ERROR1");
+        //finish();
     }
 }

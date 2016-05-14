@@ -19,10 +19,16 @@ public class Dashboard extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("ERROR2");
         super.onCreate(savedInstanceState);
+        System.out.println("ERROR3");
         setContentView(R.layout.fragment_dashboard);
+        System.out.println("ERROR4");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        System.out.println("ERROR5");
         setSupportActionBar(toolbar);
+        System.out.println("ERROR6");
+
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +70,7 @@ public class Dashboard extends AppCompatActivity
     };
 
     private void loadRuta() {
-        Intent in = new Intent(this,RutaDetallada.class);
+        Intent in = new Intent(this,Rutas.class);
     }
 
     private void startRuta() {

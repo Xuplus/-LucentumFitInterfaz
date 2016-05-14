@@ -21,6 +21,7 @@ class ListaContactos extends ArrayAdapter<String>{
         //return super.getView(position, convertView, parent);
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View CustoView = inflater.inflate(R.layout.activity_lista_contactos, parent, false);
+        return CustoView;
 
     }
 }
