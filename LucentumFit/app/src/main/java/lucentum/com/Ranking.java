@@ -10,6 +10,7 @@ import android.view.View;
 public class Ranking extends AppCompatActivity {
 
     private ListView list;
+    //String rankGlobal = "http://46.101.84.36:3000/ranking";
     private String[] amigos = {"juan", "carla", "pedro", "paco", "ana", "carlos", "esteban", "jose", "sara", "chema", "sandra", "carol", "cesar", "fernando"};
     private String[] global = {"bolt", "jornet", "stevenson", "sergio", "smith", "charlie", "martinez", "jose luis", "amaya", "petrov", "champion", "april", "leslie", "ron"};
     private String[] personal = {"personal", "jornet", "stevenson", "sergio", "smith", "charlie", "martinez", "jose luis", "amaya", "petrov", "champion", "april", "leslie", "ron"};
