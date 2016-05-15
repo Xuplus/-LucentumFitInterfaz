@@ -12,10 +12,13 @@ public class Dashboard extends AppCompatActivity/*
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("ERROR2");
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_dashboard);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
+
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -78,9 +81,11 @@ public class Dashboard extends AppCompatActivity/*
     };
 
     private void loadRuta() {
+
         /*Intent in = new Intent(this,rutadetallada.class);
         startActivity(in);*/
         rutas();
+
     }
 
     private void startRuta() {

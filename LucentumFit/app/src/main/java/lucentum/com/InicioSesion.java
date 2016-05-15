@@ -1,6 +1,8 @@
 package lucentum.com;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +25,7 @@ import java.util.Map;
 public class InicioSesion extends AppCompatActivity {
 
     RequestQueue requestQueue;
-    String loginURL = "http://alacantfit.herokuapp.com/login/";
+    String loginURL = "http://46.101.84.36:3000/login/";
     EditText usuario,pass;
 
     @Override
@@ -40,17 +42,29 @@ public class InicioSesion extends AppCompatActivity {
 
     }
 
-    public void IniciarSesion(View v) {
+  /* public void IniciarSesion(View v) {
+       SharedPreferences preferences=getSharedPreferences("usuario", Context.MODE_PRIVATE);
+       SharedPreferences.Editor editor= preferences.edit();
+       editor.putString("usu",usuario.getText().toString());
+       editor.commit();
+
+       MostrarToast("Bienvenido " + usuario.getText().toString());
         cambioActivity();
-    }
-   /* public void IniciarSesion(View v)
+    }*/
+    public void IniciarSesion(View v)
     {
 
             StringRequest request = new StringRequest(Request.Method.POST, loginURL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
 
-                    MostrarToast("Bienvenido "+usuario.getText().toString());
+                    SharedPreferences preferences=getSharedPreferences("usuario", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor= preferences.edit();
+                    editor.putString("usu",usuario.getText().toString());
+                    editor.commit();
+
+                    MostrarToast("Bienvenido " + usuario.getText().toString());
+
                     cambioActivity();
                 }
             }, new Response.ErrorListener(){
@@ -70,8 +84,8 @@ public class InicioSesion extends AppCompatActivity {
                     Map<String, String> parametros = new HashMap<String, String>();
                     parametros.put("Content-Type", "application/json; charset=utf-8");//IMPORTANTÍSIMA //por ésta linea me daba error 404
                     //parametros.put("Nombre", "Admin");
-                    parametros.put("Usuario", usuario.getText().toString());
-                    parametros.put("Pass", pass.getText().toString());
+                    parametros.put("login", usuario.getText().toString());
+                    parametros.put("password", pass.getText().toString());
                     //parametros.put("Correo", email.getText().toString());
                     // parametros.put("Ciudad", "Alicante");
                     // parametros.put("Pais", "España");
@@ -84,7 +98,7 @@ public class InicioSesion extends AppCompatActivity {
                 }
             };
             requestQueue.add(request);
-    }*/
+    }
 
 
     public void Registro(View v)
@@ -103,6 +117,7 @@ public class InicioSesion extends AppCompatActivity {
     {
         Intent intent = new Intent(this,Dashboard.class);
         startActivity(intent);
-        finish();
+        System.out.println("ERROR1");
+        //finish();
     }
 }

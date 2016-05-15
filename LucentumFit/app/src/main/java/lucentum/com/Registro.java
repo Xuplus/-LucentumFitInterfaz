@@ -27,7 +27,7 @@ import java.util.Map;
 public class Registro extends AppCompatActivity {
 
     RequestQueue requestQueue;
-    String registroURL = "http://alacantfit.herokuapp.com/usuarios/";
+    String registroURL = "http://46.101.84.36:3000/usuarios/";
     EditText usuario,email,pass,pass2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
