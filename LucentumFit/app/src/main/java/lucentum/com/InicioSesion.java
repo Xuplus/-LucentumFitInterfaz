@@ -42,7 +42,7 @@ public class InicioSesion extends AppCompatActivity {
 
     }
 
-   public void IniciarSesion(View v) {
+  /* public void IniciarSesion(View v) {
        SharedPreferences preferences=getSharedPreferences("usuario", Context.MODE_PRIVATE);
        SharedPreferences.Editor editor= preferences.edit();
        editor.putString("usu",usuario.getText().toString());
@@ -50,8 +50,8 @@ public class InicioSesion extends AppCompatActivity {
 
        MostrarToast("Bienvenido " + usuario.getText().toString());
         cambioActivity();
-    }
-   /* public void IniciarSesion(View v)
+    }*/
+    public void IniciarSesion(View v)
     {
 
             StringRequest request = new StringRequest(Request.Method.POST, loginURL, new Response.Listener<String>() {
@@ -84,8 +84,8 @@ public class InicioSesion extends AppCompatActivity {
                     Map<String, String> parametros = new HashMap<String, String>();
                     parametros.put("Content-Type", "application/json; charset=utf-8");//IMPORTANTÍSIMA //por ésta linea me daba error 404
                     //parametros.put("Nombre", "Admin");
-                    parametros.put("Usuario", usuario.getText().toString());
-                    parametros.put("Pass", pass.getText().toString());
+                    parametros.put("login", usuario.getText().toString());
+                    parametros.put("password", pass.getText().toString());
                     //parametros.put("Correo", email.getText().toString());
                     // parametros.put("Ciudad", "Alicante");
                     // parametros.put("Pais", "España");
@@ -98,7 +98,7 @@ public class InicioSesion extends AppCompatActivity {
                 }
             };
             requestQueue.add(request);
-    }*/
+    }
 
 
     public void Registro(View v)
@@ -115,7 +115,7 @@ public class InicioSesion extends AppCompatActivity {
 
     public void cambioActivity()
     {
-        Intent intent = new Intent(this,Perfil.class);
+        Intent intent = new Intent(this,Dashboard.class);
         startActivity(intent);
         System.out.println("ERROR1");
         //finish();

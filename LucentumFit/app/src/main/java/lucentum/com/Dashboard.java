@@ -14,20 +14,11 @@ public class Dashboard extends AppCompatActivity/*
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("ERROR2");
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-        System.out.println("ERROR3");
-        setContentView(R.layout.fragment_dashboard);
-        System.out.println("ERROR4");
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        System.out.println("ERROR5");
-        setSupportActionBar(toolbar);
-        System.out.println("ERROR6");
 
-=======
         setContentView(R.layout.activity_dashboard);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
->>>>>>> refs/remotes/origin/master
+
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,13 +81,11 @@ public class Dashboard extends AppCompatActivity/*
     };
 
     private void loadRuta() {
-<<<<<<< HEAD
-        Intent in = new Intent(this,Rutas.class);
-=======
+
         /*Intent in = new Intent(this,rutadetallada.class);
         startActivity(in);*/
         rutas();
->>>>>>> refs/remotes/origin/master
+
     }
 
     private void startRuta() {
