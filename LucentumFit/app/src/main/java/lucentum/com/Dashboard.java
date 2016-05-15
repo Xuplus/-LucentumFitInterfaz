@@ -2,25 +2,19 @@ package lucentum.com;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class Dashboard extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class Dashboard extends AppCompatActivity/*
+        implements NavigationView.OnNavigationItemSelectedListener */{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("ERROR2");
         super.onCreate(savedInstanceState);
+<<<<<<< HEAD
         System.out.println("ERROR3");
         setContentView(R.layout.fragment_dashboard);
         System.out.println("ERROR4");
@@ -29,6 +23,11 @@ public class Dashboard extends AppCompatActivity
         setSupportActionBar(toolbar);
         System.out.println("ERROR6");
 
+=======
+        setContentView(R.layout.activity_dashboard);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+>>>>>>> refs/remotes/origin/master
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -42,17 +41,23 @@ public class Dashboard extends AppCompatActivity
         // Botones
 
         findViewById(R.id.bStart).setOnClickListener(onClickListener);
+        findViewById(R.id.bLoad).setOnClickListener(onClickListener);
+        findViewById(R.id.iv1).setOnClickListener(onClickListener);
+        findViewById(R.id.iv2).setOnClickListener(onClickListener);
+        findViewById(R.id.iv3).setOnClickListener(onClickListener);
+        findViewById(R.id.iv4).setOnClickListener(onClickListener);
+        findViewById(R.id.iv5).setOnClickListener(onClickListener);
 
         // !Botones
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        toggle.syncState();*/
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        /*NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);*/
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -65,26 +70,74 @@ public class Dashboard extends AppCompatActivity
                 case R.id.bLoad:
                     loadRuta();
                     break;
+                case R.id.iv1:
+                    rutas();
+                    break;
+                case R.id.iv2:
+                    perfil();
+                    break;
+                case R.id.iv3:
+                    ranking();
+                    break;
+                case R.id.iv4:
+                    contactos();
+                    break;
+                case R.id.iv5:
+                    ajustes();
+                    break;
             }
         }
     };
 
     private void loadRuta() {
+<<<<<<< HEAD
         Intent in = new Intent(this,Rutas.class);
+=======
+        /*Intent in = new Intent(this,rutadetallada.class);
+        startActivity(in);*/
+        rutas();
+>>>>>>> refs/remotes/origin/master
     }
 
     private void startRuta() {
-        Intent in = new Intent(this,Rutas.class);
+        Intent in = new Intent(this,CrearRuta.class);
+        startActivity(in);
+    }
+
+    private void rutas(){
+        Intent in= new Intent(this,Rutas.class);
+        startActivity(in);
+    }
+
+    private void perfil(){
+        Intent in= new Intent(this,Perfil.class);
+        startActivity(in);
+    }
+
+    private void ranking(){
+        Intent in= new Intent(this,Ranking.class);
+        startActivity(in);
+    }
+
+    private void contactos(){
+        Intent in= new Intent(this,Contactos.class);
+        startActivity(in);
+    }
+
+    private void ajustes(){
+        Intent in= new Intent(this,Configuracion.class);
+        startActivity(in);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
+        }*/
+        finish();
     }
 
     @Override
@@ -109,7 +162,7 @@ public class Dashboard extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    /*@SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -145,5 +198,5 @@ public class Dashboard extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
+    }*/
 }
