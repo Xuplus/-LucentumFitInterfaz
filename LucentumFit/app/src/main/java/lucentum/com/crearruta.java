@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class CrearRuta extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private String prueba = "Solo sirve para generar cambios en el fichero y se registre correctamente en el git";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
