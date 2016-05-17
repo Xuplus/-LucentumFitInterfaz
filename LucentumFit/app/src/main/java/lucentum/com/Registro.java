@@ -1,6 +1,8 @@
 package lucentum.com;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +29,7 @@ import java.util.Map;
 public class Registro extends AppCompatActivity {
 
     RequestQueue requestQueue;
-    String registroURL = "http://46.101.84.36:3000/usuarios/";
+    String registroURL = "http://46.101.84.36/usuarios/";
     EditText usuario,email,pass,pass2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,12 @@ public class Registro extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
 
+
+                    SharedPreferences preferences=getSharedPreferences("inicio", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor= preferences.edit();
+                    editor.putString("primer","true");
+                    editor.commit();
+
                     MostrarToast("Registrado Correctamente");
                     cambioActivity();
                 }
@@ -98,8 +106,8 @@ public class Registro extends AppCompatActivity {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println("RESPONSE NO");
-                    MostrarToast("El usuario ya existe");
+                    System.out.println("RESPONSE NO "+ error.toString());
+                    MostrarToast("El usuario ya existe "+error.toString());
 
                 }
             }) {
