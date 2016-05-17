@@ -32,7 +32,12 @@ public class DatosContactos {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        if(nombre.equals("null")){
+            this.nombre="Sin datos";
+        }else{
+            this.nombre = nombre;
+        }
+
     }
 
     public String getLocalidad() {
@@ -40,7 +45,12 @@ public class DatosContactos {
     }
 
     public void setLocalidad(String localidad) {
-        this.localidad = localidad;
+        if(localidad.equals("null")){
+            this.localidad="Sin datos";
+        }else{
+            this.localidad = localidad;
+        }
+
     }
 
     public String getPais() {
@@ -48,7 +58,12 @@ public class DatosContactos {
     }
 
     public void setPais(String pais) {
-        this.pais = pais;
+        if(pais.equals("null")){
+            this.pais="Sin datos";
+        }else{
+            this.pais = pais;
+        }
+
     }
 
 }

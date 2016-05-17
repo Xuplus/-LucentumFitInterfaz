@@ -25,10 +25,8 @@
             android:layout_height="30dp"
             android:id="@+id/ib_eliminar"
             android:layout_weight="0.17"
-            android:layout_marginRight="20dp"
             android:background="@drawable/eliminar"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="20dp" />
+            android:layout_gravity="right" />
     </LinearLayout>
 
     <LinearLayout
