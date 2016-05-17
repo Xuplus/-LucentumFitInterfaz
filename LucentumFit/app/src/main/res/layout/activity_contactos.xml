@@ -29,7 +29,8 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left">
+            android:gravity="left"
+            android:layout_marginTop="10dp">
 
             <EditText
                 android:layout_width="250dp"
@@ -67,7 +68,7 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/ll_scrollview"
         android:paddingTop="10dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="125dp"
         android:layout_alignParentTop="false"
         android:gravity="top">
 

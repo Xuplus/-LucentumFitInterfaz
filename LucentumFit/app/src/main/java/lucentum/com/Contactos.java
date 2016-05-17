@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +30,6 @@ import java.util.Map;
 
 public class Contactos extends AppCompatActivity {
 
-    TextView prueba;
     DatosContactos datosContactos;
     //ArrayList<DatosContactos> listaContactos;
     ListaContactos lista;
@@ -37,8 +38,9 @@ public class Contactos extends AppCompatActivity {
     String amigosURL = "http://46.101.84.36:3000/amigos/Prueba/";
     String usuarioURL = "http://46.101.84.36:3000/usuarios/";
     String anadirURL = "http://46.101.84.36:3000/amigos/Relacion";
+    String eliminarURL = "http://46.101.84.36:3000/amigos/Romper";
     EditText nuevo;
-    String usuario;
+    String usuario,viejo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class Contactos extends AppCompatActivity {
                 System.out.println("Me devuelve JSON");
                 System.out.println("RESPONSE "+response);
                 JSONArray contactos  = null; // json de los contactos
-                MostrarToast(response);
+
 
                 try {
                     contactos = new JSONArray(response);
@@ -83,7 +85,6 @@ public class Contactos extends AppCompatActivity {
 
                         JSONObject e = contactos.getJSONObject(i);
                         String nombreContacto = e.getString("Amigo");
-                        MostrarToast("Bienvenido " + nombreContacto);
                         if(!nombreContacto.equals("null")) {
                             cargarDatosAmigos(nombreContacto);
                         }
@@ -138,7 +139,6 @@ public class Contactos extends AppCompatActivity {
                     localidad = datoscontactos.getString("Ciudad");
                     pais = datoscontactos.getString("Pais");
                     DatosContactos datosContactos = new DatosContactos(id,name,localidad,pais);
-                    MostrarToast(datosContactos.getLocalidad());
                     lista.add(datosContactos);
 
                 } catch (JSONException e) {
@@ -169,6 +169,7 @@ public class Contactos extends AppCompatActivity {
                 SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
                 String usuario = preferences.getString("usu", "null");
                 System.out.println("Usuario: "+usuario+"  "+usuario.length());
+
                 requestQueue = Volley.newRequestQueue(getApplicationContext());
                 Intent intent = getIntent();
                 finish();
@@ -198,6 +199,52 @@ public class Contactos extends AppCompatActivity {
         };
         requestQueue.add(request);
     }
+
+    public void eliminarContacto(View v) {
+        int pos = listview.getPositionForView(v);
+        DatosContactos contacto = (DatosContactos)lista.getItem(pos);
+        viejo = contacto.getId();
+
+        StringRequest request = new StringRequest(Request.Method.POST, eliminarURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                /*SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
+                String usuario = preferences.getString("usu", "null");
+                System.out.println("Usuario: "+usuario+"  "+usuario.length());*/
+
+
+
+                requestQueue = Volley.newRequestQueue(getApplicationContext());
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("RESPONSE NO");
+                MostrarToast("No existe el contacto.");
+
+            }
+        }) {
+
+
+            @Override
+            protected Map<String,String> getParams() throws
+                    AuthFailureError {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("Content-Type", "application/json; charset=utf-8");
+                parametros.put("Usuario", usuario);
+                parametros.put("Amigo", viejo);
+                return parametros;
+                //return toJSON();
+            }
+        };
+        requestQueue.add(request);
+    }
+
+
 
     public void MostrarToast(String mensaje)
     {
