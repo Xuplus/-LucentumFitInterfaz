@@ -1,9 +1,14 @@
 package lucentum.com;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseBooleanArray;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,9 +25,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Contactos extends AppCompatActivity {
 
-    TextView prueba;
     DatosContactos datosContactos;
     //ArrayList<DatosContactos> listaContactos;
     ListaContactos lista;
@@ -30,15 +37,19 @@ public class Contactos extends AppCompatActivity {
     RequestQueue requestQueue;
     String amigosURL = "http://46.101.84.36:3000/amigos/Prueba/";
     String usuarioURL = "http://46.101.84.36:3000/usuarios/";
+    String anadirURL = "http://46.101.84.36:3000/amigos/Relacion";
+    String eliminarURL = "http://46.101.84.36:3000/amigos/Romper";
+    EditText nuevo;
+    String usuario,viejo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //listaContactos = new ArrayList<DatosContactos>();
         setContentView(R.layout.activity_contactos);
+        nuevo = (EditText) findViewById(R.id.et_nuevo_contacto);
 
         SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
-        String usuario = preferences.getString("usu", "null");
+        usuario = preferences.getString("usu", "null");
         System.out.println("Usuario: "+usuario+"  "+usuario.length());
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
@@ -58,7 +69,7 @@ public class Contactos extends AppCompatActivity {
                 System.out.println("Me devuelve JSON");
                 System.out.println("RESPONSE "+response);
                 JSONArray contactos  = null; // json de los contactos
-                MostrarToast(response);
+
 
                 try {
                     contactos = new JSONArray(response);
@@ -74,7 +85,6 @@ public class Contactos extends AppCompatActivity {
 
                         JSONObject e = contactos.getJSONObject(i);
                         String nombreContacto = e.getString("Amigo");
-                        MostrarToast("Bienvenido " + nombreContacto);
                         if(!nombreContacto.equals("null")) {
                             cargarDatosAmigos(nombreContacto);
                         }
@@ -125,51 +135,11 @@ public class Contactos extends AppCompatActivity {
 
                     id = datoscontactos.getString("Usuario");
                     name = datoscontactos.getString("Nombre");
-                    MostrarToast(id);
+
                     localidad = datoscontactos.getString("Ciudad");
                     pais = datoscontactos.getString("Pais");
                     DatosContactos datosContactos = new DatosContactos(id,name,localidad,pais);
                     lista.add(datosContactos);
-
-
-
-
-                    /*String parametro = jObject.getString("Nombre");
-                    if(!parametro.equals("null"))
-                        inNombre.setText(parametro);
-
-                    parametro = jObject.getString("Edad");
-                    if(!parametro.equals("null"))
-                        inEdad.setText(parametro);
-
-                    // parametro = jObject.getString("Sexo");
-                    // if(!parametro.equals("null"))
-                    // inSexo.setText(parametro);
-
-                    parametro = jObject.getString("Altura");
-                    if(!parametro.equals("null"))
-                        inAltura.setText(parametro);
-
-                    parametro = jObject.getString("Peso");
-                    if(!parametro.equals("null"))
-                        inPeso.setText(parametro);
-
-                    parametro = jObject.getString("Ciudad");
-                    if(!parametro.equals("null"))
-                        inCiudad.setText(parametro);
-
-                    parametro = jObject.getString("Pais");
-                    if(!parametro.equals("null"))
-                        inPais.setText(parametro);
-
-                    parametro = jObject.getString("Correo");
-                    //if(!parametro.equals("null"))
-                    inCorreo.setText(parametro);
-
-
-                    //usu.setText(projectname, TextView.BufferType.EDITABLE);
-                    System.out.println("RESPONSE "+parametro);
-                    //usu.setText("hola");*/
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -189,6 +159,93 @@ public class Contactos extends AppCompatActivity {
         };
         requestQueue.add(request);
     }
+
+    public void nuevoContacto(View v)
+    {
+
+        StringRequest request = new StringRequest(Request.Method.POST, anadirURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
+                String usuario = preferences.getString("usu", "null");
+                System.out.println("Usuario: "+usuario+"  "+usuario.length());
+
+                requestQueue = Volley.newRequestQueue(getApplicationContext());
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("RESPONSE NO");
+                MostrarToast("No existe el contacto.");
+
+            }
+        }) {
+
+
+            @Override
+            protected Map<String,String> getParams() throws
+                    AuthFailureError {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("Content-Type", "application/json; charset=utf-8");
+                parametros.put("Usuario", usuario);
+                parametros.put("Amigo", nuevo.getText().toString());
+                return parametros;
+                //return toJSON();
+            }
+        };
+        requestQueue.add(request);
+    }
+
+    public void eliminarContacto(View v) {
+        int pos = listview.getPositionForView(v);
+        DatosContactos contacto = (DatosContactos)lista.getItem(pos);
+        viejo = contacto.getId();
+
+        StringRequest request = new StringRequest(Request.Method.POST, eliminarURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                /*SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
+                String usuario = preferences.getString("usu", "null");
+                System.out.println("Usuario: "+usuario+"  "+usuario.length());*/
+
+
+
+                requestQueue = Volley.newRequestQueue(getApplicationContext());
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("RESPONSE NO");
+                MostrarToast("No existe el contacto.");
+
+            }
+        }) {
+
+
+            @Override
+            protected Map<String,String> getParams() throws
+                    AuthFailureError {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("Content-Type", "application/json; charset=utf-8");
+                parametros.put("Usuario", usuario);
+                parametros.put("Amigo", viejo);
+                return parametros;
+                //return toJSON();
+            }
+        };
+        requestQueue.add(request);
+    }
+
+
+
     public void MostrarToast(String mensaje)
     {
         Toast toast = Toast.makeText(this, mensaje, Toast.LENGTH_SHORT);

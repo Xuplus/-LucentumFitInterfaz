@@ -6,9 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,7 +35,7 @@ public class InicioSesion extends AppCompatActivity {
         setContentView(R.layout.activity_inicio_sesion);
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        usuario = (EditText) findViewById(R.id.et_usuario);
+        usuario = (EditText) findViewById(R.id.et_nuevo_contacto);
         pass = (EditText) findViewById(R.id.et_password);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
