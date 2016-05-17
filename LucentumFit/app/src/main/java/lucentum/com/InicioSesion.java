@@ -42,16 +42,16 @@ public class InicioSesion extends AppCompatActivity {
 
     }
 
-  /* public void IniciarSesion(View v) {
+   public void IniciarSesion(View v) {
        SharedPreferences preferences=getSharedPreferences("usuario", Context.MODE_PRIVATE);
        SharedPreferences.Editor editor= preferences.edit();
-       editor.putString("usu",usuario.getText().toString());
+       editor.putString("usu", usuario.getText().toString());
        editor.commit();
 
        MostrarToast("Bienvenido " + usuario.getText().toString());
         cambioActivity();
-    }*/
-    public void IniciarSesion(View v)
+    }
+   /* public void IniciarSesion(View v)
     {
 
             StringRequest request = new StringRequest(Request.Method.POST, loginURL, new Response.Listener<String>() {
@@ -98,7 +98,7 @@ public class InicioSesion extends AppCompatActivity {
                 }
             };
             requestQueue.add(request);
-    }
+    }*/
 
 
     public void Registro(View v)
@@ -115,9 +115,9 @@ public class InicioSesion extends AppCompatActivity {
 
     public void cambioActivity()
     {
-        Intent intent = new Intent(this,Dashboard.class);
+        Intent intent = new Intent(this,PrimerInicio.class);
         startActivity(intent);
-        System.out.println("ERROR1");
+        //System.out.println("ERROR1");
         //finish();
     }
 }
