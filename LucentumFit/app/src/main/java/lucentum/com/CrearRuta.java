@@ -3,6 +3,7 @@ package lucentum.com;
 import android.Manifest;
 import android.content.Context;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -14,8 +15,16 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Xml;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -27,17 +36,29 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.kml.KmlLayer;
 
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    private String contenido;
+    private String postURL = "http://46.101.84.36:80/rutas/kml";
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private long updateTime = 10000;
     private GoogleMap mMap;
-    private List<Location> listaPosiciones;
+    private List<Location> listaPosiciones = new ArrayList<>();
     private Location miPosicion;
     private LocationManager locManager;
     private GoogleApiClient mGoogleApiClient;
@@ -47,6 +68,11 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
     private boolean boolUpdate = true;
     private Updater updater;
     private boolean connected;
+    private String nombreRuta = "Prueba";
+    private String descripcionRuta = "Descripción de la prueba";
+    private String color = "ffff0000";
+    private int width = 4;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +100,7 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
         System.out.println("Main finaliza");
     }
 
@@ -258,11 +285,15 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
 
         @Override
         protected Void doInBackground(Void... params) {
+            int i=0;
             while(boolUpdate){
                 //miPosicion = getLastKnownLocation();
                 if (connected){
                     //newPosition();
                     listaPosiciones.add(miPosicion);
+                    Log.d("LISTA", listaPosiciones.toString());
+                    if (i >= 3) finalizar();
+                    i++;
                 }
 
                 try {
@@ -280,4 +311,128 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
         mMap.addMarker(new MarkerOptions().position(pos));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
     }
-}
+
+    public void finalizar(){
+        try {
+            contenido = CreateXMLString();
+            System.out.println("Escrito");
+            File fichero = new File(getFilesDir(),nombreRuta + "_rute.kml");
+
+
+            String filename = fichero.getName();
+            System.out.println(fichero.getAbsolutePath());
+            FileOutputStream outputStream;
+
+            enviarApi();
+
+            try {
+                outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+                outputStream.write(contenido.getBytes());
+                outputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void enviarApi() {
+        StringRequest request = new StringRequest(Request.Method.POST, postURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.d("SALIDA","Correcta");
+
+
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("RESPONSE NO");
+
+            }
+        }) {
+
+
+            @Override
+            protected Map<String,String> getParams() throws
+                    AuthFailureError {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("Content-Type", "multipart/form-data");//IMPORTANTÍSIMA //por ésta linea me daba error 404
+                //parametros.put("Nombre", "Admin");
+                parametros.put("Xml",contenido);
+                parametros.put("NombreRuta", nombreRuta);
+                parametros.put("Usuario", "MrPotato");
+                return parametros;
+                //return toJSON();
+            }
+        };
+
+        requestQueue.add(request);
+    }
+
+    public String CreateXMLString() throws IllegalArgumentException, IllegalStateException, IOException
+    {
+        XmlSerializer xmlSerializer = Xml.newSerializer();
+        StringWriter writer = new StringWriter();
+
+        xmlSerializer.setOutput(writer);
+
+        //Start Document
+        xmlSerializer.startDocument("UTF-8", true);
+        //xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+        //Open Tag <file>
+        xmlSerializer.startTag("","kml");
+        xmlSerializer.attribute("","xmlns","http://earth.google.com/kml/2.1");
+        xmlSerializer.startTag("", "Document");
+
+        //XmlSerializer tempXml = Xml.newSerializer();
+        //StringWriter tempWriter =  new StringWriter();
+
+
+        xmlSerializer.startTag("", "name");
+        xmlSerializer.text(nombreRuta);
+        xmlSerializer.endTag("", "name");
+        xmlSerializer.startTag("", "description");
+        xmlSerializer.text(descripcionRuta);
+        xmlSerializer.endTag("", "description");
+        xmlSerializer.startTag("", "Style");
+        xmlSerializer.attribute("", "id", "blueLine");
+        xmlSerializer.startTag("", "LineStyle");
+        xmlSerializer.startTag("", "color");
+        xmlSerializer.text(color);
+        xmlSerializer.endTag("", "color");
+        xmlSerializer.startTag("", "width");
+        xmlSerializer.text(new String().valueOf(width));
+        xmlSerializer.endTag("", "width");
+        xmlSerializer.endTag("", "LineStyle");
+        xmlSerializer.endTag("", "Style");
+        xmlSerializer.startTag("", "Placemark");
+        xmlSerializer.startTag("", "name");
+        xmlSerializer.text("BlueLine");
+        xmlSerializer.endTag("", "name");
+        xmlSerializer.startTag("", "styleUrl");
+        xmlSerializer.text("#blueLine");
+        xmlSerializer.endTag("", "styleUrl");
+        xmlSerializer.startTag("", "LineString");
+        xmlSerializer.startTag("", "altitudeMode");
+        xmlSerializer.text("relative");
+        xmlSerializer.endTag("", "altitudeMode");
+        xmlSerializer.startTag("", "coordinates");
+        for (int i=0; i < listaPosiciones.size(); i++){ //longitud, latitud, altidud
+            Location aux = listaPosiciones.get(i);
+            xmlSerializer.text(aux.getLongitude() + "," + aux.getLatitude() + "," + aux.getAltitude());
+        }
+        xmlSerializer.endTag("","coordinates");
+        xmlSerializer.endTag("","LineString");
+        xmlSerializer.endTag("","Placemark");
+        xmlSerializer.endTag("","Document");
+        xmlSerializer.endTag("","kml");
+        xmlSerializer.endDocument();
+
+        return writer.toString();
+    }
+    }
