@@ -1,7 +1,10 @@
 package lucentum.com;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -16,6 +19,10 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Xml;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -76,11 +83,8 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("Main empieza");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_ruta);
-
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 // The next two lines tell the new client that “this” current class will handle connection stuff
                 .addConnectionCallbacks(this)
@@ -88,21 +92,50 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
                         //fourth line adds the LocationServices API endpoint from GooglePlayServices
                 .addApi(LocationServices.API)
                 .build();
-
         // Create the LocationRequest object
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(1000 * 5)        //cada 5 segundos actualiza
-                .setFastestInterval(1 * 1000);
-
+                .setFastestInterval(1000);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        findViewById(R.id.btn_finalizar).setOnClickListener(onClickListener);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
-        System.out.println("Main finaliza");
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btn_finalizar:
+                    AlertDialog.Builder ad = new AlertDialog.Builder(CrearRuta.this);
+                    ad.setTitle("Elige nombre para la ruta");
+                    LayoutInflater factory = LayoutInflater.from(CrearRuta.this);
+                    final View view = factory.inflate(R.layout.elige_nombre_ruta, null);
+                    ad.setView(view);
+                    ad.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            EditText texto = (EditText) findViewById(R.id.et_Ruta);
+                            nombreRuta = texto.getText().toString();
+                            finalizar();
+                            dialog.dismiss();
+                        }
+                    });
+                    ad.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    ad.show();
+            }
+        }
+    };
 
     @Override
     protected void onResume() {
@@ -169,7 +202,6 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
     }*/
 
     private Location getLastKnownLocation() {
-        System.out.println("getlastlocation empieza");
         locManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
         List<String> providers = locManager.getProviders(true);
         Location bestLocation = null;
@@ -187,7 +219,6 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
                 bestLocation = l;
             }
         }
-        System.out.println("getlastlocation finaliza");
         return bestLocation;
     }
 
@@ -203,7 +234,6 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        System.out.println("onMapReady empieza");
         mMap = googleMap;
 
         //miPosicion = getLastKnownLocation();
@@ -213,12 +243,10 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        System.out.println("onMapReady finaliza");
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        System.out.println(" @@@@@ onConnected empieza");
         connected = true;
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -241,7 +269,6 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
             Log.d("POSICION",miPosicion.toString());
             newPosition();
         }
-        System.out.println(" @@@@@ onConnected finaliza");
     }
 
     @Override
@@ -258,7 +285,6 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        System.out.println(" @@@@@ onConnectionFailed empieza");
         if (connectionResult.hasResolution()) {
             try {
                 // Start an Activity that tries to resolve the error
@@ -278,22 +304,16 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
                  */
             Log.e("Error", "Location services connection failed with code " + connectionResult.getErrorCode());
         }
-        System.out.println(" @@@@@ onConnectionFailed termina");
     }
 
     private class Updater extends AsyncTask<Void,Void,Void>{
 
         @Override
         protected Void doInBackground(Void... params) {
-            int i=0;
             while(boolUpdate){
-                //miPosicion = getLastKnownLocation();
                 if (connected){
-                    //newPosition();
                     listaPosiciones.add(miPosicion);
                     Log.d("LISTA", listaPosiciones.toString());
-                    if (i >= 3) finalizar();
-                    i++;
                 }
 
                 try {
@@ -344,7 +364,7 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
             public void onResponse(String response) {
 
                 Log.d("SALIDA","Correcta");
-
+                Toast.makeText(CrearRuta.this, "Ruta enviada con éxito", Toast.LENGTH_SHORT).show();
 
             }
         }, new Response.ErrorListener(){
@@ -365,7 +385,9 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
                 //parametros.put("Nombre", "Admin");
                 parametros.put("Xml",contenido);
                 parametros.put("NombreRuta", nombreRuta);
-                parametros.put("Usuario", "MrPotato");
+                SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
+                String usuario = preferences.getString("usu", "null");
+                parametros.put("Usuario", usuario);
                 return parametros;
                 //return toJSON();
             }

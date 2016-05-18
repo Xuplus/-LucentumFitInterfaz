@@ -27,14 +27,25 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2">
+        android:layout_height="120dp"
+        android:background="#4152b6">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/button2" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/layout_bg"
+            android:layout_weight="1"
+            android:layout_margin="4dp" >
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="@string/btnFinalizar"
+                android:id="@+id/btn_finalizar"
+                android:background="@drawable/mybutton"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_gravity="center" />
+        </FrameLayout>
     </LinearLayout>
 </LinearLayout>
 
