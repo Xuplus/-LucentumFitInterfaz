@@ -25,7 +25,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar" >
-        <activity android:name=".InicioSesion" >
+        <activity android:name=".Ranking" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Registro" />
-        <activity android:name=".Ranking" />
+        <activity android:name=".InicioSesion" />
         <activity android:name=".Rutas" />
         <activity android:name=".Contactos" />
         <activity android:name=".Perfil" />
