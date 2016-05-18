@@ -27,15 +27,13 @@ import java.util.Map;
 
 public class Contactos extends AppCompatActivity {
 
-    DatosContactos datosContactos;
-    //ArrayList<DatosContactos> listaContactos;
     ListaContactos lista;
     ListView listview;
     RequestQueue requestQueue;
-    String amigosURL = "http://46.101.84.36/amigos/LeerAmigos/";
-    String usuarioURL = "http://46.101.84.36/usuarios/";
-    String anadirURL = "http://46.101.84.36/amigos/Relacion";
-    String eliminarURL = "http://46.101.84.36/amigos/Romper";
+    String amigosURL = "http://46.101.84.36/amigos/LeerAmigos/"; //url de los amigos en la API
+    String usuarioURL = "http://46.101.84.36/usuarios/"; //url de los usuarios en la API
+    String anadirURL = "http://46.101.84.36/amigos/Relacion"; //url para crear amigos en la API
+    String eliminarURL = "http://46.101.84.36/amigos/Romper"; //url para borrar amigos en la API
     EditText nuevo;
     String usuario,viejo;
 
@@ -45,6 +43,7 @@ public class Contactos extends AppCompatActivity {
         setContentView(R.layout.activity_contactos);
         nuevo = (EditText) findViewById(R.id.et_nuevo_contacto);
 
+        //recoge el id del usuario que usa la app
         SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
         usuario = preferences.getString("usu", "null");
         System.out.println("Usuario: "+usuario+"  "+usuario.length());
@@ -58,6 +57,7 @@ public class Contactos extends AppCompatActivity {
     }
 
 
+    //carga los amigos del usuario
     public void cargarAmigos(String usuario) {
         StringRequest request = new StringRequest(Request.Method.GET, amigosURL+usuario, new Response.Listener<String>() {
             @Override
@@ -74,10 +74,9 @@ public class Contactos extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                //JSONObject data = jObject.getJSONObject("data"); // get data object
 
                 try {
-
+                    //recorre todos los contactos y recoge sus amigos
                     for(int i=0;i<contactos.length();i++){
 
                         JSONObject e = contactos.getJSONObject(i);
@@ -110,6 +109,7 @@ public class Contactos extends AppCompatActivity {
         requestQueue.add(request);
     }
 
+    //cargar datos de los amigos
     public void cargarDatosAmigos(String amigo) {
         StringRequest request = new StringRequest(Request.Method.GET, usuarioURL+amigo, new Response.Listener<String>() {
             @Override
@@ -127,14 +127,14 @@ public class Contactos extends AppCompatActivity {
                 //JSONObject data = jObject.getJSONObject("data"); // get data object
 
                 try {
-
+                    //recoge la informacion de los amigos y la almacena
                     String id, name, localidad,pais, ranking;
 
                     id = datoscontactos.getString("Usuario");
                     name = datoscontactos.getString("Nombre");
-
                     localidad = datoscontactos.getString("Ciudad");
                     pais = datoscontactos.getString("Pais");
+
                     DatosContactos datosContactos = new DatosContactos(id,name,localidad,pais);
                     lista.add(datosContactos);
 
@@ -157,17 +157,21 @@ public class Contactos extends AppCompatActivity {
         requestQueue.add(request);
     }
 
+    //añadir contactos
     public void nuevoContacto(View v)
     {
 
         StringRequest request = new StringRequest(Request.Method.POST, anadirURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
+                //probar con el preferences quitado
+                /*SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
                 String usuario = preferences.getString("usu", "null");
-                System.out.println("Usuario: "+usuario+"  "+usuario.length());
+                System.out.println("Usuario: "+usuario+"  "+usuario.length());*/
 
                 requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+                //reinicia la activity
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
@@ -182,7 +186,7 @@ public class Contactos extends AppCompatActivity {
             }
         }) {
 
-
+            //añade al amigo en la API
             @Override
             protected Map<String,String> getParams() throws
                     AuthFailureError {
@@ -191,13 +195,15 @@ public class Contactos extends AppCompatActivity {
                 parametros.put("Usuario", usuario);
                 parametros.put("Amigo", nuevo.getText().toString());
                 return parametros;
-                //return toJSON();
             }
         };
         requestQueue.add(request);
     }
 
+    //elimina el contacto seleccionado
     public void eliminarContacto(View v) {
+        
+        //recoge la posicion del contacto en la listview
         int pos = listview.getPositionForView(v);
         DatosContactos contacto = (DatosContactos)lista.getItem(pos);
         viejo = contacto.getId();
@@ -206,6 +212,8 @@ public class Contactos extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+                //reinicia la activity
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
@@ -220,7 +228,7 @@ public class Contactos extends AppCompatActivity {
             }
         }) {
 
-
+            //Actualiza los amigos en la Api
             @Override
             protected Map<String,String> getParams() throws
                     AuthFailureError {
@@ -229,14 +237,13 @@ public class Contactos extends AppCompatActivity {
                 parametros.put("Usuario", usuario);
                 parametros.put("Amigo", viejo);
                 return parametros;
-                //return toJSON();
             }
         };
         requestQueue.add(request);
     }
 
 
-
+    //muestra un mensaje
     public void MostrarToast(String mensaje)
     {
         Toast toast = Toast.makeText(this, mensaje, Toast.LENGTH_SHORT);
