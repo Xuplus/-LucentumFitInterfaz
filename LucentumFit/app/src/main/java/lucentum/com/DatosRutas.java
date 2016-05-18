@@ -1,5 +1,7 @@
 package lucentum.com;
 
+import android.content.Intent;
+
 /**
  * Created by Fran on 17/05/2016.
  */
@@ -9,6 +11,13 @@ public class DatosRutas {
     private String KM;
 
     //falta constructor
+
+
+    public DatosRutas(String nombre, String descargas, String KM) {
+        this.setNombre(nombre);
+        this.setDescargas(descargas);
+        this.setKM(KM);
+    }
 
     public String getNombre() {
         return nombre;
@@ -28,7 +37,7 @@ public class DatosRutas {
 
     public void setDescargas(String descargas) {
         if(descargas.equals("null")){
-            this.descargas="Veces Descargada: Sin datos";
+            this.descargas="Veces descargada: Sin datos";
         }else{
             this.descargas = "Veces descargada: " + descargas;
         }
@@ -45,6 +54,7 @@ public class DatosRutas {
             this.KM = KM + " KM";
         }
     }
+
 }
 
 

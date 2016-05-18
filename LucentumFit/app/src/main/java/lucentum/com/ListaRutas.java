@@ -15,7 +15,7 @@ import java.util.List;
  */
 class ListaRutas  extends ArrayAdapter {
 
-    List list = new ArrayList();
+    List lista = new ArrayList();
 
     public ListaRutas(Context context, int resource) {
         super(context, R.layout.activity_lista_rutas);
@@ -23,7 +23,7 @@ class ListaRutas  extends ArrayAdapter {
 
     public void add(DatosRutas object) {
         super.add(object);
-        list.add(object);
+        lista.add(object);
     }
 
     @Override
@@ -65,6 +65,7 @@ class ListaRutas  extends ArrayAdapter {
 
         return row;
     }
+
 
 
     static class RutasHolder{

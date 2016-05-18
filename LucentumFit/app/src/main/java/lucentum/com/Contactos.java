@@ -46,7 +46,6 @@ public class Contactos extends AppCompatActivity {
         //recoge el id del usuario que usa la app
         SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
         usuario = preferences.getString("usu", "null");
-        System.out.println("Usuario: "+usuario+"  "+usuario.length());
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         cargarAmigos(usuario);
@@ -63,8 +62,6 @@ public class Contactos extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                System.out.println("Me devuelve JSON");
-                System.out.println("RESPONSE "+response);
                 JSONArray contactos  = null; // json de los contactos
 
 
@@ -115,8 +112,6 @@ public class Contactos extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                System.out.println("Me devuelve JSON");
-                System.out.println("RESPONSE "+response);
                 JSONObject datoscontactos = null; // json de los datos de los contactos
 
                 try {
@@ -164,10 +159,6 @@ public class Contactos extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, anadirURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                //probar con el preferences quitado
-                /*SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
-                String usuario = preferences.getString("usu", "null");
-                System.out.println("Usuario: "+usuario+"  "+usuario.length());*/
 
                 requestQueue = Volley.newRequestQueue(getApplicationContext());
 
@@ -180,7 +171,6 @@ public class Contactos extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("RESPONSE NO");
                 MostrarToast("No existe el contacto.");
 
             }
@@ -202,7 +192,7 @@ public class Contactos extends AppCompatActivity {
 
     //elimina el contacto seleccionado
     public void eliminarContacto(View v) {
-        
+
         //recoge la posicion del contacto en la listview
         int pos = listview.getPositionForView(v);
         DatosContactos contacto = (DatosContactos)lista.getItem(pos);
@@ -217,12 +207,12 @@ public class Contactos extends AppCompatActivity {
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
+
             }
         }, new Response.ErrorListener(){
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("RESPONSE NO");
                 MostrarToast("No existe el contacto.");
 
             }

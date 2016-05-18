@@ -44,8 +44,8 @@ public class RutaYEmpezar extends AppCompatActivity implements View.OnClickListe
         //cargar imagen
         //Picasso.with(this.getApplicationContext()).load(url1).resize(192, 192).centerInside().into(imagenruta);
 
-        volver = (Button) this.findViewById(R.id.button4);
-        empezar = (Button) this.findViewById(R.id.button3);
+        volver = (Button) this.findViewById(R.id.button3);
+        empezar = (Button) this.findViewById(R.id.button4);
 
 
         volver.setOnClickListener(this);
