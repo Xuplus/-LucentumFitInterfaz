@@ -41,7 +41,7 @@ public class Perfil extends AppCompatActivity {
 
     ImageView fotoPerfil;
     RequestQueue requestQueue;
-    String usuarioURL = "http://46.101.84.36:3000/usuarios/";
+    String usuarioURL = "http://46.101.84.36/usuarios/";
     TextView inUsuarioPerfil;
     TextView inNombre;
     TextView inEdad;

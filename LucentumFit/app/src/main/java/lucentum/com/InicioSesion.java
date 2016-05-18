@@ -23,8 +23,11 @@ import java.util.Map;
 public class InicioSesion extends AppCompatActivity {
 
     RequestQueue requestQueue;
-    String loginURL = "http://46.101.84.36:80/login/";
+
+    String loginURL = "http://46.101.84.36/login/";
+
     EditText usuario,pass;
+    String primerInicio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +43,10 @@ public class InicioSesion extends AppCompatActivity {
 
     }
 
-  /* public void IniciarSesion(View v) {
+   /*public void IniciarSesion(View v) {
        SharedPreferences preferences=getSharedPreferences("usuario", Context.MODE_PRIVATE);
        SharedPreferences.Editor editor= preferences.edit();
-       editor.putString("usu",usuario.getText().toString());
+       editor.putString("usu", usuario.getText().toString());
        editor.commit();
 
        MostrarToast("Bienvenido " + usuario.getText().toString());
@@ -60,6 +63,11 @@ public class InicioSesion extends AppCompatActivity {
                     SharedPreferences.Editor editor= preferences.edit();
                     editor.putString("usu",usuario.getText().toString());
                     editor.commit();
+
+                    SharedPreferences pref=getSharedPreferences("inicio", Context.MODE_PRIVATE);
+                     primerInicio = pref.getString("primer", "null");
+
+                    //System.out.println("Usuario: " + usuario + "  " + usuario.length());
 
                     MostrarToast("Bienvenido " + usuario.getText().toString());
 
@@ -113,9 +121,16 @@ public class InicioSesion extends AppCompatActivity {
 
     public void cambioActivity()
     {
-        Intent intent = new Intent(this,Dashboard.class);
+        Intent intent;
+        if(primerInicio.equals("true")) {
+            intent = new Intent(this, PrimerInicio.class);
+        }else{
+            MostrarToast("primerInicio: "+primerInicio);
+            intent = new Intent(this, Dashboard.class);
+        }
+
         startActivity(intent);
-        System.out.println("ERROR1");
+        //System.out.println("ERROR1");
         //finish();
     }
 }
