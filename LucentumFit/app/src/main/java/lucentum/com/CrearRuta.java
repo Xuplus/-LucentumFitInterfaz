@@ -6,7 +6,10 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -32,7 +35,7 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
         LocationListener {
 
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-    private float updateTime;
+    private long updateTime = 10000;
     private GoogleMap mMap;
     private List<Location> listaPosiciones;
     private Location miPosicion;
@@ -42,9 +45,12 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
     private double currentLatitude;
     private double currentLongitude;
     private boolean boolUpdate = true;
+    private Updater updater;
+    private boolean connected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("Main empieza");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_ruta);
@@ -60,25 +66,53 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
         // Create the LocationRequest object
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(1000 * 5);        //cada 5 segundos actualiza
+                .setInterval(1000 * 5)        //cada 5 segundos actualiza
+                .setFastestInterval(1 * 1000);
 
-        Handler empezar = new Handler();
-        empezar.post(update);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        System.out.println("Main finaliza");
     }
 
-    private Runnable update = new Runnable() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Now lets connect to the API
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.v(this.getClass().getSimpleName(), "onPause()");
+
+        //Disconnect from API onPause()
+        if (mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    /*private Runnable update = new Runnable() {
         @Override
         public void run() {
+
+            System.out.println("update empieza");
             while (boolUpdate){
                 Handler myHandler = new Handler();
+                Context context = getApplicationContext();
+                CharSequence text = "Cargando posicion...";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 //myHandler.postDelayed(mMyRunnable, 1000);//Message will be delivered in 1 second.
                 myHandler.postDelayed(mMyRunnable,10000);
             }
+            System.out.println("update finaliza");
         }
     };
 
@@ -89,6 +123,7 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
         public void run()
         {
             //Change state here
+            System.out.println("runnable empieza");
             miPosicion = getLastKnownLocation();
             listaPosiciones.add(miPosicion);
             Context context = getApplicationContext();
@@ -97,8 +132,9 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+            System.out.println("runnable finaliza");
         }
-    };
+    };*/
 
     /*public Location getMiPosicion(){
         //miPosicion = mLocationRequest.
@@ -106,11 +142,13 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
     }*/
 
     private Location getLastKnownLocation() {
+        System.out.println("getlastlocation empieza");
         locManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
         List<String> providers = locManager.getProviders(true);
         Location bestLocation = null;
         for (String provider : providers) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                System.out.println("ERROR EN LOCALIZACION");
                 return null;
             }
             Location l = locManager.getLastKnownLocation(provider);
@@ -122,6 +160,7 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
                 bestLocation = l;
             }
         }
+        System.out.println("getlastlocation finaliza");
         return bestLocation;
     }
 
@@ -137,17 +176,23 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        System.out.println("onMapReady empieza");
         mMap = googleMap;
 
-        miPosicion = getLastKnownLocation();
+        //miPosicion = getLastKnownLocation();
+        updater = new Updater();
+        updater.execute();
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        System.out.println("onMapReady finaliza");
     }
 
     @Override
     public void onConnected(Bundle bundle) {
+        System.out.println(" @@@@@ onConnected empieza");
+        connected = true;
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -166,7 +211,10 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
             //If everything went fine lets get latitude and longitude
             currentLatitude = miPosicion.getLatitude();
             currentLongitude = miPosicion.getLongitude();
+            Log.d("POSICION",miPosicion.toString());
+            newPosition();
         }
+        System.out.println(" @@@@@ onConnected finaliza");
     }
 
     @Override
@@ -176,11 +224,14 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
 
     @Override
     public void onLocationChanged(Location location) {
-
+        Log.d("LOC", "location changed!");
+        miPosicion = location;
+        newPosition();
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        System.out.println(" @@@@@ onConnectionFailed empieza");
         if (connectionResult.hasResolution()) {
             try {
                 // Start an Activity that tries to resolve the error
@@ -200,5 +251,33 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
                  */
             Log.e("Error", "Location services connection failed with code " + connectionResult.getErrorCode());
         }
+        System.out.println(" @@@@@ onConnectionFailed termina");
+    }
+
+    private class Updater extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            while(boolUpdate){
+                //miPosicion = getLastKnownLocation();
+                if (connected){
+                    //newPosition();
+                    listaPosiciones.add(miPosicion);
+                }
+
+                try {
+                    Thread.sleep(updateTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+    }
+
+    private void newPosition() {
+        LatLng pos = new LatLng(miPosicion.getLatitude(), miPosicion.getLongitude());
+        mMap.addMarker(new MarkerOptions().position(pos));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
     }
 }
