@@ -21,6 +21,8 @@ class ListaRutas  extends ArrayAdapter {
         super(context, R.layout.activity_lista_rutas);
     }
 
+
+
     public void add(DatosRutas object) {
         super.add(object);
         lista.add(object);
@@ -65,7 +67,6 @@ class ListaRutas  extends ArrayAdapter {
 
         return row;
     }
-
 
 
     static class RutasHolder{
