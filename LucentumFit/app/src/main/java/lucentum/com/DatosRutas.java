@@ -10,6 +10,13 @@ public class DatosRutas {
 
     //falta constructor
 
+
+    public DatosRutas(String nombre, String descargas, String KM) {
+        this.setNombre(nombre);
+        this.setDescargas(descargas);
+        this.setKM(KM);
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -28,7 +35,7 @@ public class DatosRutas {
 
     public void setDescargas(String descargas) {
         if(descargas.equals("null")){
-            this.descargas="Veces Descargada: Sin datos";
+            this.descargas="Veces descargada: Sin datos";
         }else{
             this.descargas = "Veces descargada: " + descargas;
         }
