@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -35,10 +32,10 @@ public class Contactos extends AppCompatActivity {
     ListaContactos lista;
     ListView listview;
     RequestQueue requestQueue;
-    String amigosURL = "http://46.101.84.36:3000/amigos/Prueba/";
-    String usuarioURL = "http://46.101.84.36:3000/usuarios/";
-    String anadirURL = "http://46.101.84.36:3000/amigos/Relacion";
-    String eliminarURL = "http://46.101.84.36:3000/amigos/Romper";
+    String amigosURL = "http://46.101.84.36:80/amigos/LeerAmigos/";
+    String usuarioURL = "http://46.101.84.36:80/usuarios/";
+    String anadirURL = "http://46.101.84.36:80/amigos/Relacion";
+    String eliminarURL = "http://46.101.84.36:80/amigos/Romper";
     EditText nuevo;
     String usuario,viejo;
 
@@ -208,12 +205,6 @@ public class Contactos extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, eliminarURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                /*SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
-                String usuario = preferences.getString("usu", "null");
-                System.out.println("Usuario: "+usuario+"  "+usuario.length());*/
-
-
-
                 requestQueue = Volley.newRequestQueue(getApplicationContext());
                 Intent intent = getIntent();
                 finish();
