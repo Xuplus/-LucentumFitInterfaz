@@ -1,5 +1,7 @@
 package lucentum.com;
 
+import android.content.Intent;
+
 /**
  * Created by Fran on 17/05/2016.
  */
@@ -52,6 +54,7 @@ public class DatosRutas {
             this.KM = KM + " KM";
         }
     }
+
 }
 
 

@@ -67,6 +67,7 @@ class ListaRutas  extends ArrayAdapter {
     }
 
 
+
     static class RutasHolder{
         public TextView tv_nombre_ruta;
         public TextView tvdescargas;

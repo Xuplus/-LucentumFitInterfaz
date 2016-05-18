@@ -75,14 +75,16 @@
             android:layout_gravity="center"
             android:baselineAlignBottom="false"
             android:layout_marginRight="10dp"
-            android:clickable="true" />
+            android:clickable="true"
+            android:onClick="cargarRutasGeneral" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ib_amigos"
             android:background="@drawable/amigos"
-            android:clickable="true" />
+            android:clickable="true"
+            android:onClick="cargarRutasAmigos" />
     </LinearLayout>
 
     <LinearLayout

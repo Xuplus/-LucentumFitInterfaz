@@ -19,7 +19,9 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
                 android:id="@+id/tv_nombreruta"
-                android:layout_margin="30dp" />
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -45,10 +47,12 @@
                 android:layout_width="125dp"
                 android:layout_height="30dp"
                 android:text="Ver Detalles"
-                android:id="@+id/button2"
+                android:id="@+id/ib_detalles"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/mybutton" />
+                android:background="@drawable/mybutton"
+                android:onClick="verDetalles"
+                android:layout_marginBottom="10dp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
