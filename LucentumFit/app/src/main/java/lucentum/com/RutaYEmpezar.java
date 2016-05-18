@@ -31,13 +31,6 @@ public class RutaYEmpezar extends AppCompatActivity implements View.OnClickListe
         TextView textkm = (TextView) this.findViewById(R.id.aquiKm);
         TextView textDesca = (TextView) this.findViewById(R.id.aquiDesca);
 
-        Bundle extras = getIntent().getExtras();
-
-        if(extras != null) {
-            nombre = extras.getString("nombre");
-            km = extras.getString("km");
-            descargas = extras.getString("descargas");
-        }
 
         //cargar nombre
         textnom.setText(nombre);
@@ -51,8 +44,8 @@ public class RutaYEmpezar extends AppCompatActivity implements View.OnClickListe
         //cargar imagen
         //Picasso.with(this.getApplicationContext()).load(url1).resize(192, 192).centerInside().into(imagenruta);
 
-        volver = (Button) this.findViewById(R.id.button);
-        empezar = (Button) this.findViewById(R.id.button);
+        volver = (Button) this.findViewById(R.id.button4);
+        empezar = (Button) this.findViewById(R.id.button3);
 
 
         volver.setOnClickListener(this);
@@ -62,14 +55,6 @@ public class RutaYEmpezar extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button3://empezar
-
-                /*Bundle bundle = new Bundle();
-                bundle.putString("nombre", googlenombre);
-                bundle.putString("url", googleurl);
-                PerfilFragment fragInfo = new PerfilFragment();
-                fragInfo.setArguments(bundle);
-                fn.beginTransaction().replace(R.id.content_frame, fragInfo).commit();*/
-
                 startActivity(new Intent(this, rutadetallada.class));
                 break;
 
