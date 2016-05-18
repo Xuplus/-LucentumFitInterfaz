@@ -15,6 +15,10 @@ public class RutaYEmpezar extends AppCompatActivity implements View.OnClickListe
 
     private Button volver,empezar;
 
+    private String nombre = "";
+    private String km = "";
+    private String descargas = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +31,13 @@ public class RutaYEmpezar extends AppCompatActivity implements View.OnClickListe
         TextView textkm = (TextView) this.findViewById(R.id.aquiKm);
         TextView textDesca = (TextView) this.findViewById(R.id.aquiDesca);
 
+        Bundle extras = getIntent().getExtras();
 
-        String nombre = "";
-        String km = "";
-        String descargas = "";
+        if(extras != null) {
+            nombre = extras.getString("nombre");
+            km = extras.getString("km");
+            descargas = extras.getString("descargas");
+        }
 
         //cargar nombre
         textnom.setText(nombre);
