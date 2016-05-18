@@ -30,10 +30,6 @@ class ListaContactos extends ArrayAdapter{
     HttpURLConnection conn = null;
 
     List list = new ArrayList();
-    TextView eliminar;
-    String usuario;
-    RequestQueue requestQueue;
-    String eliminarURL = "http://46.101.84.36:80/amigos/Romper";
     private Bitmap loadedImage;
 
     public ListaContactos(Context context, int resource) {
@@ -96,10 +92,6 @@ class ListaContactos extends ArrayAdapter{
         return row;
     }
 
-    public String eliminarUsuario(int position){
-        DatosContactos eliminar = (DatosContactos)this.getItem(position);
-        return eliminar.getId();
-    }
 
     static class ContactosHolder{
         public TextView tv_nombre_contacto;

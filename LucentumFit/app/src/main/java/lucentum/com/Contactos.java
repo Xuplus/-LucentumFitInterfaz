@@ -32,10 +32,10 @@ public class Contactos extends AppCompatActivity {
     ListaContactos lista;
     ListView listview;
     RequestQueue requestQueue;
-    String amigosURL = "http://46.101.84.36:80/amigos/LeerAmigos/";
-    String usuarioURL = "http://46.101.84.36:80/usuarios/";
-    String anadirURL = "http://46.101.84.36:80/amigos/Relacion";
-    String eliminarURL = "http://46.101.84.36:80/amigos/Romper";
+    String amigosURL = "http://46.101.84.36/amigos/LeerAmigos/";
+    String usuarioURL = "http://46.101.84.36/usuarios/";
+    String anadirURL = "http://46.101.84.36/amigos/Relacion";
+    String eliminarURL = "http://46.101.84.36/amigos/Romper";
     EditText nuevo;
     String usuario,viejo;
 

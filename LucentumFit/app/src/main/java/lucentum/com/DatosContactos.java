@@ -17,7 +17,6 @@ public class DatosContactos {
         this.setNombre(nombre);
         this.setLocalidad(localidad);
         this.setPais(pais);
-        //this.setRanking(ranking);
     }
 
     public String getId() {
