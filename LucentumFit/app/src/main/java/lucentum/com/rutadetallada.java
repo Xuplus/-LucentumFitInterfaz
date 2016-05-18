@@ -362,23 +362,25 @@ public class rutadetallada extends FragmentActivity implements OnMapReadyCallbac
 
         Location localizacion = this.getLastKnownLocation();
 
-        currentLatitude = localizacion.getLatitude();
-        currentLongitude = localizacion.getLongitude();
-
-        LatLng miposicion = new LatLng(currentLatitude,currentLongitude);
-        mMap.addMarker(new MarkerOptions().position(miposicion).title("MI POSICION"));
-
         mMap.addMarker(new MarkerOptions().position(inicio).title("INICIO"));
         mMap.addMarker(new MarkerOptions().position(meta).title("META"));
 
-        ////////////////////////////
-        String url = getDirectionsUrl(miposicion, inicio);
+        if(localizacion != null){
+            currentLatitude = localizacion.getLatitude();
+            currentLongitude = localizacion.getLongitude();
 
-        DownloadTask downloadTask = new DownloadTask();
+            LatLng miposicion = new LatLng(currentLatitude,currentLongitude);
+            mMap.addMarker(new MarkerOptions().position(miposicion).title("MI POSICION"));
 
-        downloadTask.execute(url);
+            String url = getDirectionsUrl(miposicion, inicio);
 
-        ///////////////////////////////////
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(miposicion.latitude,miposicion.longitude),10));
+            DownloadTask downloadTask = new DownloadTask();
+
+            downloadTask.execute(url);
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(miposicion.latitude, miposicion.longitude), 10));
+        }else{
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(inicio.latitude, inicio.longitude), 10));
+        }
     }
 }
