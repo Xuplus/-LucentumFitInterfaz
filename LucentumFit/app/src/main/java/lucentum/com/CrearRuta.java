@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -115,13 +116,15 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
                     AlertDialog.Builder ad = new AlertDialog.Builder(CrearRuta.this);
                     ad.setTitle("Elige nombre para la ruta");
                     LayoutInflater factory = LayoutInflater.from(CrearRuta.this);
-                    final View view = factory.inflate(R.layout.elige_nombre_ruta, null);
-                    ad.setView(view);
+                    //final View view = factory.inflate(R.layout.elige_nombre_ruta, null);
+                    final EditText input = new EditText(CrearRuta.this);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+                    input.setLayoutParams(lp);
+                    ad.setView(input);
                     ad.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            EditText texto = (EditText) findViewById(R.id.et_Ruta);
-                            nombreRuta = texto.getText().toString();
+                            nombreRuta = input.getText().toString();
                             finalizar();
                             dialog.dismiss();
                         }
@@ -334,6 +337,7 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
 
     public void finalizar(){
         try {
+            boolUpdate = false;
             contenido = CreateXMLString();
             System.out.println("Escrito");
             File fichero = new File(getFilesDir(),nombreRuta + "_rute.kml");
@@ -356,6 +360,7 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
         } catch (IOException e) {
             e.printStackTrace();
         }
+        finish();
     }
 
     private void enviarApi() {
