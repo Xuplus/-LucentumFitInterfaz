@@ -61,15 +61,6 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ib_fav"
-            android:background="@drawable/favoritos"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:layout_marginRight="10dp" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/ib_rutas"
             android:background="@drawable/rutas"
             android:layout_gravity="center"
@@ -101,14 +92,16 @@
             android:text="Distancia min"
             android:id="@+id/bt_distmin"
             android:backgroundTint="#ffffff"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:onClick="menormayor" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Distancia max"
             android:id="@+id/bt_dismax"
-            android:backgroundTint="#ffffff" />
+            android:backgroundTint="#ffffff"
+            android:onClick="mayormenor" />
     </LinearLayout>
 
 </RelativeLayout>

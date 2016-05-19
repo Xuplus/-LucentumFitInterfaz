@@ -6,14 +6,10 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,8 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class Rutas extends AppCompatActivity{
 
@@ -35,6 +29,8 @@ public class Rutas extends AppCompatActivity{
     RequestQueue requestQueue;
     String rutasURL = "http://46.101.84.36/Rutas"; //url de las rutas en la API
     String rutasAmigosURL = "http://46.101.84.36/rutas/amigos/"; //url de las rutas en la API
+    String rutasMayorURL = "http://46.101.84.36/Rutas/MayorMenor"; //url de las rutas en la API
+    String rutasMenorURL = "http://46.101.84.36/Rutas/MenorMayor"; //url de las rutas en la API
     String usuario;
 
     @Override
@@ -112,20 +108,19 @@ public class Rutas extends AppCompatActivity{
         listview.setAdapter(lista);
     }
 
-    public void cargarRutasAmigos(View v){
-        cargarRutasAmigos2();
+    public void mayormenor(View v){
+        cargarMayorMenor();
         listview = (ListView)findViewById(R.id.lv_rutas);
         lista= new ListaRutas(this,R.layout.activity_lista_rutas);
         listview.setAdapter(lista);
     }
 
-    public void cargarRutasAmigos2() {
-        StringRequest request = new StringRequest(Request.Method.GET, rutasAmigosURL+usuario, new Response.Listener<String>() {
+    public void cargarMayorMenor(){
+        StringRequest request = new StringRequest(Request.Method.GET, rutasMayorURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 JSONArray datosrutas = null; // json de los datos de los contactos
-                MostrarToast(response);
 
                 try {
                     datosrutas = new JSONArray(response);
@@ -142,7 +137,120 @@ public class Rutas extends AppCompatActivity{
                         name = e.getString("Nombre");
                         des = e.getString("VecesDescargadas");
                         kim = e.getString("Distancia");
-                        MostrarToast(name);
+                        DatosRutas datosRutas = new DatosRutas(name,des,kim);
+                        lista.add(datosRutas);
+                    }
+
+
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("NO");
+            }
+
+        }) {
+
+
+
+        };
+        requestQueue.add(request);
+    }
+
+    public void menormayor(View v){
+        cargarMenorMayor();
+        listview = (ListView)findViewById(R.id.lv_rutas);
+        lista= new ListaRutas(this,R.layout.activity_lista_rutas);
+        listview.setAdapter(lista);
+    }
+
+    public void cargarMenorMayor(){
+        StringRequest request = new StringRequest(Request.Method.GET, rutasMenorURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                JSONArray datosrutas = null; // json de los datos de los contactos
+
+                try {
+                    datosrutas = new JSONArray(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                //JSONObject data = jObject.getJSONObject("data"); // get data object
+
+                try {
+                    String  name, des , kim;
+                    for(int i=0;i<datosrutas.length();i++){
+
+                        JSONObject e = datosrutas.getJSONObject(i);
+                        name = e.getString("Nombre");
+                        des = e.getString("VecesDescargadas");
+                        kim = e.getString("Distancia");
+                        DatosRutas datosRutas = new DatosRutas(name,des,kim);
+                        lista.add(datosRutas);
+                    }
+
+
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("NO");
+            }
+
+        }) {
+
+
+
+        };
+        requestQueue.add(request);
+    }
+
+    public void cargarRutasAmigos(View v){
+        cargarRutasAmigos2();
+        listview = (ListView)findViewById(R.id.lv_rutas);
+        lista= new ListaRutas(this,R.layout.activity_lista_rutas);
+        listview.setAdapter(lista);
+    }
+
+    public void cargarRutasAmigos2() {
+        StringRequest request = new StringRequest(Request.Method.GET, rutasAmigosURL+usuario, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                JSONArray datosrutas = null; // json de los datos de los contactos
+
+                try {
+                    datosrutas = new JSONArray(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                //JSONObject data = jObject.getJSONObject("data"); // get data object
+
+                try {
+                    String  name, des , kim;
+                    for(int i=0;i<datosrutas.length();i++){
+
+                        JSONObject e = datosrutas.getJSONObject(i);
+                        name = e.getString("Nombre");
+                        des = e.getString("VecesDescargadas");
+                        kim = e.getString("Distancia");
                         DatosRutas datosRutas = new DatosRutas(name,des,kim);
                         lista.add(datosRutas);
                     }
@@ -177,7 +285,6 @@ public class Rutas extends AppCompatActivity{
     {
         int pos = listview.getPositionForView(v);
         DatosRutas rutas = (DatosRutas) lista.getItem(pos);
-        MostrarToast(rutas.getNombre());
         startActivity(new Intent(this,RutaYEmpezar.class));
         Intent i = new Intent(Rutas.this,RutaYEmpezar.class);
         i.putExtra("nombre",rutas.getNombre());
@@ -192,5 +299,6 @@ public class Rutas extends AppCompatActivity{
         Toast toast = Toast.makeText(this, mensaje, Toast.LENGTH_SHORT);
         toast.show();
     }
+
 
 }
