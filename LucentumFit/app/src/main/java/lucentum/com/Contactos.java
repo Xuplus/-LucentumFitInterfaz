@@ -160,9 +160,10 @@ public class Contactos extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                requestQueue = Volley.newRequestQueue(getApplicationContext());
 
                 //reinicia la activity
+
+
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);

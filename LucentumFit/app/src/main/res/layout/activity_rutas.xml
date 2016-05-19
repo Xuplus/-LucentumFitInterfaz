@@ -61,15 +61,6 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ib_fav"
-            android:background="@drawable/favoritos"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:layout_marginRight="10dp" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/ib_rutas"
             android:background="@drawable/rutas"
             android:layout_gravity="center"

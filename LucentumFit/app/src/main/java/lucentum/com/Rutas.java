@@ -21,10 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
 
 public class Rutas extends AppCompatActivity{
 
@@ -141,7 +137,6 @@ public class Rutas extends AppCompatActivity{
                         name = e.getString("Nombre");
                         des = e.getString("VecesDescargadas");
                         kim = e.getString("Distancia");
-                        MostrarToast(name);
                         DatosRutas datosRutas = new DatosRutas(name,des,kim);
                         lista.add(datosRutas);
                     }
@@ -199,7 +194,6 @@ public class Rutas extends AppCompatActivity{
                         name = e.getString("Nombre");
                         des = e.getString("VecesDescargadas");
                         kim = e.getString("Distancia");
-                        MostrarToast(name);
                         DatosRutas datosRutas = new DatosRutas(name,des,kim);
                         lista.add(datosRutas);
                     }
@@ -241,7 +235,6 @@ public class Rutas extends AppCompatActivity{
             public void onResponse(String response) {
 
                 JSONArray datosrutas = null; // json de los datos de los contactos
-                MostrarToast(response);
 
                 try {
                     datosrutas = new JSONArray(response);
@@ -258,7 +251,6 @@ public class Rutas extends AppCompatActivity{
                         name = e.getString("Nombre");
                         des = e.getString("VecesDescargadas");
                         kim = e.getString("Distancia");
-                        MostrarToast(name);
                         DatosRutas datosRutas = new DatosRutas(name,des,kim);
                         lista.add(datosRutas);
                     }
