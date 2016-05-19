@@ -31,6 +31,13 @@ public class RutaYEmpezar extends AppCompatActivity implements View.OnClickListe
         TextView textkm = (TextView) this.findViewById(R.id.aquiKm);
         TextView textDesca = (TextView) this.findViewById(R.id.aquiDesca);
 
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            nombre = extras.getString("nombre");
+            km = extras.getString("km");
+            descargas = extras.getString("descargas");
+        }
 
         //cargar nombre
         textnom.setText(nombre);
@@ -52,10 +59,13 @@ public class RutaYEmpezar extends AppCompatActivity implements View.OnClickListe
         empezar.setOnClickListener(this);
     }
 
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button3://empezar
-                startActivity(new Intent(this, rutadetallada.class));
+                Intent i = new Intent(RutaYEmpezar.this,rutadetallada.class);
+                i.putExtra("nombre",nombre);
+                startActivity(i);
                 break;
 
             case R.id.button4://volver

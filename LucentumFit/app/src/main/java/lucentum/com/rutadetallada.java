@@ -1,6 +1,7 @@
 package lucentum.com;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -9,12 +10,18 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -32,15 +39,21 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +70,9 @@ public class rutadetallada extends FragmentActivity implements OnMapReadyCallbac
     private double currentLongitude;
     private Location location;
     private LocationManager locManager;
+    private String nombreruta = "";
+    RequestQueue requestQueue;
+    private String ruta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +92,12 @@ public class rutadetallada extends FragmentActivity implements OnMapReadyCallbac
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(1000 * 5);        //cada 5 segundos actualiza
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            nombreruta = extras.getString("nombre");
+        }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -332,23 +354,46 @@ public class rutadetallada extends FragmentActivity implements OnMapReadyCallbac
         }
     }
 
+    public void cargarkml(String ruta) {
+        StringRequest request = new StringRequest(Request.Method.GET, ruta, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                InputStream stream = new ByteArrayInputStream(response.getBytes(Charset.forName("UTF-8")));
+
+                KmlLayer layer = null;
+                //R.raw.alicanteplaya
+                try {
+                    layer = new KmlLayer(mMap,stream,getApplicationContext());
+                    layer.addLayerToMap();
+
+                } catch (XmlPullParserException e) {
+                    e.printStackTrace();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("NO");
+            }
+        }) {
+        };
+        requestQueue.add(request);
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
-        KmlLayer layer = null;
+        String archivoruta = "46.101.84.36/rutas/kml/"+nombreruta;
 
-        try {
-            layer = new KmlLayer(mMap, R.raw.alicanteplaya, getApplicationContext());//pedir el fichero a servidor
-            layer.addLayerToMap();
-
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        cargarkml(archivoruta);
 
         //el inicio y meta de coordenadas son al reves que las que hay en el fichero de coordenadas
         LatLng inicio = new LatLng(38.343962,-0.481135);
