@@ -23,7 +23,9 @@ import java.util.Map;
 public class InicioSesion extends AppCompatActivity {
 
     RequestQueue requestQueue;
+
     String loginURL = "http://46.101.84.36/login/";
+
     EditText usuario,pass;
     String primerInicio;
 

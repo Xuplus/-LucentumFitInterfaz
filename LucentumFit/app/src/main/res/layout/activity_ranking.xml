@@ -84,7 +84,8 @@
             android:layout_height="match_parent"
             android:id="@+id/user_list"
             android:background="@drawable/myedittext"
-            android:smoothScrollbar="false" />
+            android:smoothScrollbar="false"
+            android:headerDividersEnabled="true" />
     </LinearLayout>
 
 

@@ -9,6 +9,7 @@ public class DatosContactos {
     private String nombre;
     private String localidad;
     private String pais;
+    private String imagen;
     //private String ranking;
 
     public DatosContactos(String id, String nombre, String localidad, String pais /*String ranking*/){
@@ -16,7 +17,6 @@ public class DatosContactos {
         this.setNombre(nombre);
         this.setLocalidad(localidad);
         this.setPais(pais);
-        //this.setRanking(ranking);
     }
 
     public String getId() {
@@ -66,4 +66,11 @@ public class DatosContactos {
 
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }
