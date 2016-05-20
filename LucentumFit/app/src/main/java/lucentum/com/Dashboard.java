@@ -6,15 +6,14 @@ import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toolbar;
 
 public class Dashboard extends AppCompatActivity/*
         implements NavigationView.OnNavigationItemSelectedListener */{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("ERROR2");
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_dashboard);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);

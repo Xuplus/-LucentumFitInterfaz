@@ -24,6 +24,7 @@
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
         <activity android:name=".InicioSesion">
             <intent-filter>
@@ -38,8 +39,7 @@
         <activity android:name=".Contactos" />
         <activity android:name=".Perfil" />
         <activity
-            android:name=".Dashboard"
-            android:label="@string/title_activity_dashboard">
+            android:name=".Dashboard">
 
             <!-- android:theme="@style/AppTheme.NoActionBar" -->
 

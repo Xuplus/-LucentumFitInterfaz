@@ -462,4 +462,10 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
 
         return writer.toString();
     }
+
+    @Override
+    public void onBackPressed() {
+        boolUpdate = false;
+        finish();
     }
+}
