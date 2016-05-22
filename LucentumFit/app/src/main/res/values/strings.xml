@@ -30,4 +30,11 @@
     <string name="configuracion_notificacion">Notificaciones</string>
     <string name="configuracion_peticion_amistad">" Petición de amistad"</string>
     <string name="configuracion_union_amigo">" Un amigo se ha unido"</string>
+    <string name="title_activity_rutadetallada">Map</string>
+    <string name="title_activity_crearruta">Map</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="google_app_id">937666506964</string>
+    <string name="btnFinalizar">Finalizar</string>
 </resources>
