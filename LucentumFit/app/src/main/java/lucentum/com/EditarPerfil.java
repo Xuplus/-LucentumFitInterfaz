@@ -30,6 +30,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -54,6 +55,12 @@ public class EditarPerfil extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
+
+        SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
+        String usuario = preferences.getString("usu", "null");
+
+        ((TextView)findViewById(R.id.lbl_NombreUsuario)).setText(usuario);
+
         save= (Button) findViewById(R.id.btn_save);
         nombre= (EditText) findViewById(R.id.tbx_Nombre);
         edad= (EditText) findViewById(R.id.tbx_Edad);
