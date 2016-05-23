@@ -69,7 +69,7 @@ public class InicioSesion extends AppCompatActivity {
 
                     //System.out.println("Usuario: " + usuario + "  " + usuario.length());
 
-                    MostrarToast("Bienvenido " + usuario.getText().toString());
+                    //MostrarToast("Bienvenido " + usuario.getText().toString());
 
                     cambioActivity();
                 }
@@ -126,7 +126,7 @@ public class InicioSesion extends AppCompatActivity {
         if(primerInicio.equals("true")) {
             intent = new Intent(this, PrimerInicio.class);
         }else{
-            MostrarToast("primerInicio: "+primerInicio);
+            //MostrarToast("primerInicio: "+primerInicio);
             intent = new Intent(this, Dashboard.class);
         }
 

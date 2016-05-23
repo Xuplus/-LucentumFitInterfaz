@@ -115,7 +115,7 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
                 case R.id.btn_finalizar:
                     AlertDialog.Builder ad = new AlertDialog.Builder(CrearRuta.this);
                     ad.setTitle("Elige nombre para la ruta");
-                    LayoutInflater factory = LayoutInflater.from(CrearRuta.this);
+                    //LayoutInflater factory = LayoutInflater.from(CrearRuta.this);
                     //final View view = factory.inflate(R.layout.elige_nombre_ruta, null);
                     final EditText input = new EditText(CrearRuta.this);
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
@@ -124,8 +124,24 @@ public class CrearRuta extends FragmentActivity implements OnMapReadyCallback, G
                     ad.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            nombreRuta = input.getText().toString();
-                            finalizar();
+                            nombreRuta = input.getText().toString().replaceAll(" ","");
+                            //finalizar();
+                            AlertDialog.Builder ad = new AlertDialog.Builder(CrearRuta.this);
+                            ad = new AlertDialog.Builder(CrearRuta.this);
+                            ad.setTitle("Escribe una breve descripción");
+                            final EditText input = new EditText(CrearRuta.this);
+                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+                            input.setLayoutParams(lp);
+                            ad.setView(input);
+                            ad.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    descripcionRuta = input.getText().toString();
+                                    finalizar();
+                                    dialog.dismiss();
+                                }
+                            });
+                            ad.show();
                             dialog.dismiss();
                         }
                     });
