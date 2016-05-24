@@ -1,59 +1,42 @@
 package lucentum.com;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.kml.KmlLayer;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,8 +54,6 @@ public class rutadetallada extends FragmentActivity implements OnMapReadyCallbac
     private Location location;
     private LocationManager locManager;
     private String nombreruta = "";
-    RequestQueue requestQueue;
-    private String ruta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -354,7 +335,7 @@ public class rutadetallada extends FragmentActivity implements OnMapReadyCallbac
         }
     }
 
-    public void cargarkml(String ruta) {
+    /*public void cargarkml(String ruta) {
         StringRequest request = new StringRequest(Request.Method.GET, ruta, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -383,7 +364,7 @@ public class rutadetallada extends FragmentActivity implements OnMapReadyCallbac
         }) {
         };
         requestQueue.add(request);
-    }
+    }*/
 
 
     @Override
@@ -391,19 +372,73 @@ public class rutadetallada extends FragmentActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
-        String archivoruta = "46.101.84.36/rutas/kml/"+nombreruta;
+        KmlLayer layer = null;
+        LatLng inicio = null;
+        LatLng meta = null;
 
-        cargarkml(archivoruta);
+        if(nombreruta.contains("alicanteplaya")) {
+            try {
+                layer = new KmlLayer(mMap, R.raw.alicanteplaya, getApplicationContext());
+                layer.addLayerToMap();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
 
-        //el inicio y meta de coordenadas son al reves que las que hay en el fichero de coordenadas
-        LatLng inicio = new LatLng(38.343962,-0.481135);
-        LatLng meta = new LatLng(38.348689,-0.472549); //esta es de alicante playa
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            inicio = new LatLng(38.343962,-0.481135);
+            meta = new LatLng(38.348689,-0.472549); //esta es de alicante playa
 
-        //LatLng inicio = new LatLng(38.345943,-0.480482);//esta es de monforte alicante
-        //LatLng meta = new LatLng(38.380696,-0.730359);
+        }else if(nombreruta.contains("monfortealicante")){
+            try {
+                layer = new KmlLayer(mMap, R.raw.monfortealicante, getApplicationContext());
+                layer.addLayerToMap();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
 
-        //LatLng inicio = new LatLng(38.657537, -0.24194);//esta es de sierra de aitana
-        //LatLng meta = new LatLng(38.658036, -0.241692);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            inicio = new LatLng(38.345943,-0.480482);//esta es de monforte alicante
+            meta = new LatLng(38.380696,-0.730359);
+
+        }else if(nombreruta.contains("sierraaitana")){
+            try {
+                layer = new KmlLayer(mMap, R.raw.sierraaitana, getApplicationContext());
+                layer.addLayerToMap();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            inicio = new LatLng(38.657537, -0.24194);//esta es de sierra de aitana
+            meta = new LatLng(38.658036, -0.241692);
+        }else if(nombreruta.contains("universidadalicante")) {
+            try {
+                layer = new KmlLayer(mMap, R.raw.universidadalicante, getApplicationContext());
+                layer.addLayerToMap();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            inicio = new LatLng(38.385987, -0.518201);
+            meta = new LatLng(38.386145, -0.518249); //esta es de universidad
+        }else if(nombreruta.contains("sanjuan")) {
+            try {
+                layer = new KmlLayer(mMap, R.raw.sanjuan, getApplicationContext());
+                layer.addLayerToMap();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            inicio = new LatLng(38.39901, -0.430198);
+            meta = new LatLng(38.411505,-0.434505); //esta es de sanjuan
+        }
 
         Location localizacion = this.getLastKnownLocation();
 
