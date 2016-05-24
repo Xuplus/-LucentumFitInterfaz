@@ -110,7 +110,7 @@ public class EditarPerfil extends AppCompatActivity {
         cuidad= (EditText) findViewById(R.id.tbx_cuidad);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-        SharedPreferences preferences =getSharedPreferences("usuario",Context.MODE_PRIVATE);
+        //SharedPreferences preferences =getSharedPreferences("usuario",Context.MODE_PRIVATE);
         nom=preferences.getString("usu", "");
         img=(ImageView) findViewById(R.id.img_foto);
 
