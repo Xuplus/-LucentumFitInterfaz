@@ -70,8 +70,14 @@ public class RutaYEmpezar extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button4://volver
-                startActivity(new Intent(this,Rutas.class));
+                //startActivity(new Intent(this,Rutas.class));
+                finish();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

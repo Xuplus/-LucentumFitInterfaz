@@ -285,7 +285,7 @@ public class Rutas extends AppCompatActivity{
     {
         int pos = listview.getPositionForView(v);
         DatosRutas rutas = (DatosRutas) lista.getItem(pos);
-        startActivity(new Intent(this,RutaYEmpezar.class));
+        //startActivity(new Intent(this,RutaYEmpezar.class));
         Intent i = new Intent(Rutas.this,RutaYEmpezar.class);
         i.putExtra("nombre",rutas.getNombre());
         i.putExtra("descargas",rutas.getDescargas());
@@ -300,5 +300,8 @@ public class Rutas extends AppCompatActivity{
         toast.show();
     }
 
-
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
