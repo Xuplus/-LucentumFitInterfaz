@@ -33,7 +33,7 @@ public class RutaYEmpezar extends AppCompatActivity implements View.OnClickListe
 
         Bundle extras = getIntent().getExtras();
 
-        if(extras != null) {
+        if (extras != null) {
             nombre = extras.getString("nombre");
             km = extras.getString("km");
             descargas = extras.getString("descargas");
@@ -59,18 +59,13 @@ public class RutaYEmpezar extends AppCompatActivity implements View.OnClickListe
         empezar.setOnClickListener(this);
     }
 
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button3://empezar
-
-                /*Bundle bundle = new Bundle();
-                bundle.putString("nombre", googlenombre);
-                bundle.putString("url", googleurl);
-                PerfilFragment fragInfo = new PerfilFragment();
-                fragInfo.setArguments(bundle);
-                fn.beginTransaction().replace(R.id.content_frame, fragInfo).commit();*/
-
-                startActivity(new Intent(this, rutadetallada.class));
+                Intent i = new Intent(RutaYEmpezar.this,rutadetallada.class);
+                i.putExtra("nombre",nombre);
+                startActivity(i);
                 break;
 
             case R.id.button4://volver
