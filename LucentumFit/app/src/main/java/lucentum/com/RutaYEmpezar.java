@@ -1,8 +1,8 @@
 package lucentum.com;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -49,7 +49,8 @@ public class RutaYEmpezar extends AppCompatActivity implements View.OnClickListe
         textDesca.setText(descargas);
 
         //cargar imagen
-        //Picasso.with(this.getApplicationContext()).load(url1).resize(192, 192).centerInside().into(imagenruta);
+        String url = "http://46.101.84.36/rutas/info/" + nombre +"/imagenes/" + nombre; //puede que sea nombre + ".png"
+        Picasso.with(this.getApplicationContext()).load(url).resize(250, 350).centerInside().into(imagenruta);
 
         volver = (Button) this.findViewById(R.id.button3);
         empezar = (Button) this.findViewById(R.id.button4);
